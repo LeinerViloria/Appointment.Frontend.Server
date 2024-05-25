@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Appointment.Customer.Module.Shared" Version="1.0.1" />
+		<PackageReference Include="Configuration.Module.Shared" Version="1.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.4" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.4" PrivateAssets="all" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="Radzen.Blazor" Version="4.32.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Remove="Data\*.json" />
+		<EmbeddedResource Include="Data\*.json" />
+	</ItemGroup>
+
+</Project>
