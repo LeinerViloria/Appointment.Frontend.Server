@@ -26,7 +26,7 @@ public static class Utilities
     public static Type SearchModule(string Name)
     {
         var Module = typeof(Utilities).Assembly.GetTypes()
-                .Where(t => t.GetInterfaces().Any(i => i.Name == "IBaseModule`1"))
+                .Where(t => t.GetInterfaces().Any(i => i.Name == "IBaseModule"))
                 .Where(x => !x.Name.Contains("BaseModule"))
                 .Single(x => x.FullName == $"Appointment.Frontend.Modules.{Name}Module");
 

@@ -14,11 +14,11 @@ public abstract class DynamicBaseView : ComponentBase
     [Inject] public IServiceProvider ServiceProvider { get; set; } = null!;
     protected bool ViewIsReady {get; set;}
     protected bool RouteIsValid {get; set;}
-    protected IBaseModule<object> Module { get; set; } = null!;
+    protected IBaseModule Module { get; set; } = null!;
 
     protected void SearchModule()
     {
         var Type = Utilities.SearchModule(ViewRoute);
-        Module = (IBaseModule<object>) ActivatorUtilities.CreateInstance(ServiceProvider, Type);
+        Module = (IBaseModule) ActivatorUtilities.CreateInstance(ServiceProvider, Type);
     }
 }

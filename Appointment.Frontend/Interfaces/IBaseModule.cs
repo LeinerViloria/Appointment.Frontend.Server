@@ -1,8 +1,7 @@
 
 namespace Appointment.Frontend.Interfaces;
 
-public interface IBaseModule<T> where T : class
+public interface IBaseModule
 {
-    string Name { get; set;}
-    T Entity {get; set;}
+    string PluralName { get; set;}
 }

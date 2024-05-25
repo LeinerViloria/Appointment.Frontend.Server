@@ -5,5 +5,5 @@ namespace Appointment.Frontend.Modules;
 
 public class ServiceModule : BaseModule<Service>
 {
-    public override string Name {get; set;} = "Servicio";
+    public override string PluralName {get; set;} = "Servicios";
 }

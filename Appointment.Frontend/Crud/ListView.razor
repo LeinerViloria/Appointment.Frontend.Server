@@ -6,7 +6,7 @@
 
 @if(ViewIsReady && RouteIsValid)
 {
-    <h3>@($"{Module.Name}s")</h3>
+    <h3>@Module.PluralName</h3>
     <RadzenDataGrid @bind-Value=@selectedItems Data="@data" TItem="IDictionary<string, object>" ColumnWidth="200px"
                 AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterMode="FilterMode.Advanced" AllowPaging="true" AllowSorting="true">
         <Columns>
