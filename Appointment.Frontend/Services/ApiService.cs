@@ -5,18 +5,13 @@ using Newtonsoft.Json;
 
 namespace Appointment.Frontend.Services;
 
-public class ApiService
+public class ApiService(IConfiguration configurationManager)
 {
     List<ApiDataDTO> EndPoints {get; set;} = [];
     public bool EndPointIsSaved(string Name)
     {
-        var Item = Utilities.SearchFile("ApiData.json");
-
-        if(EndPoints.Count == 0)
-        {
-            var Data = JsonConvert.DeserializeObject<List<ApiDataDTO>>(Item)!;
-            EndPoints = Data;
-        }
+        EndPoints = configurationManager.GetSection("ApiConfiguration")
+            .Get<List<ApiDataDTO>>()!;
 
         var IsSaved = EndPoints.Exists(x => x.EndPoints.Exists(y => string.Equals(y, Name, StringComparison.OrdinalIgnoreCase)));
 
