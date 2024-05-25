@@ -1,0 +1,51 @@
+﻿@page "/login"
+
+@implements IDisposable
+
+<PageTitle>Login</PageTitle>
+
+<RadzenCard class="rz-my-12 rz-mx-auto rz-p-4 rz-p-md-12" style="max-width: 600px;">
+    <RadzenTemplateForm Data=@("LoginWithDefaultValues")>
+        <RadzenLogin AllowRegister="true" AllowResetPassword="true" Username=@userName Password=@password
+                     AllowRememberMe="true" RememberMe="@rememberMe"
+                     Login=@(args => OnLogin(args, "Login with default values"))
+                     ResetPassword=@(args => OnResetPassword(args, "Login with default values"))
+                     Register=@(args => OnRegister("Login with default values")) />
+    </RadzenTemplateForm>
+</RadzenCard>
+
+@code 
+{
+    [CascadingParameter] public MainLayout MainLayout { get; set; } = null!;
+
+    string userName = "admin";
+    string password = "admin";
+    bool rememberMe = true;
+
+    protected override void OnInitialized()
+    {
+        MainLayout.SetExternalView(true);
+        base.OnInitialized();
+    }
+
+    public void Dispose()
+    {
+        MainLayout.SetExternalView(false);
+        GC.SuppressFinalize(this);
+    }
+
+    void OnLogin(LoginArgs args, string name)
+    {
+
+    }
+
+    void OnRegister(string name)
+    {
+
+    }
+
+    void OnResetPassword(string value, string name)
+    {
+
+    }
+}

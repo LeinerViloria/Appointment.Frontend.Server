@@ -1,0 +1,113 @@
+@page "/{ViewRoute}"
+
+@inherits DynamicBaseView
+
+@using System.Linq.Dynamic.Core
+
+@if(ViewIsReady && RouteIsValid)
+{
+    <h3>@($"{Module.Name}s")</h3>
+    <RadzenDataGrid @bind-Value=@selectedItems Data="@data" TItem="IDictionary<string, object>" ColumnWidth="200px"
+                AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterMode="FilterMode.Advanced" AllowPaging="true" AllowSorting="true">
+        <Columns>
+            @foreach (var column in columns)
+            {
+                <RadzenDataGridColumn @key=@column.Key Title="@column.Key" Type="column.Value"
+                                    Property="@GetColumnPropertyExpression(column.Key, column.Value)">
+                    <Template>
+                        @context[@column.Key]
+                    </Template>
+                </RadzenDataGridColumn>
+            }
+        </Columns>
+    </RadzenDataGrid>
+}else if(ViewIsReady && !RouteIsValid)
+{
+    <p>Ruta inválida</p>
+}
+else
+{
+    <p>Cargando...</p>
+}
+
+@code {
+    IList<IDictionary<string, object>> selectedItems;
+    public IEnumerable<IDictionary<string, object>> data { get; set; }
+
+    public IDictionary<string, Type> columns { get; set; }
+
+    public enum EnumTest
+    {
+        EnumValue1,
+        EnumValue2
+    }
+
+    public string GetColumnPropertyExpression(string name, Type type)
+    {
+        var expression = $@"it[""{name}""].ToString()";
+
+        if (type == typeof(int))
+        {
+            return $"int.Parse({expression})";
+        }
+        else if (type == typeof(DateTime))
+        {
+            return $"DateTime.Parse({expression})";
+        }
+        else if (type.IsEnum)
+        {
+            return $@"Int32(Enum.Parse(it[""{name}""].GetType(), {expression}))";
+        }
+
+        return expression;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        RouteIsValid = ApiService.EndPointIsSaved(ViewRoute);
+
+        if(RouteIsValid)
+        {
+            SearchModule();
+        }
+
+        ViewIsReady = true;
+
+        await base.OnInitializedAsync();
+
+        columns = new Dictionary<string, Type>()
+        {
+            { "EmployeeID", typeof(int) },
+            { "MyColumn", typeof(EnumTest) },
+            { "FirstName", typeof(string) },
+            { "LastName", typeof(string) },
+            { "HireDate", typeof(DateTime) },
+        };
+
+        foreach (var i in Enumerable.Range(0, 50))
+        {
+            columns.Add($"Column{i}", typeof(string));
+        }
+
+        data = Enumerable.Range(0, 20).Select(i =>
+        {
+            var row = new Dictionary<string, object>();
+
+            foreach (var column in columns)
+            {
+                row.Add(
+                    column.Key,
+                    column.Value == typeof(EnumTest)
+                        ? (i % 2 == 0 ? EnumTest.EnumValue1 : EnumTest.EnumValue2)
+                        : column.Value == typeof(int)
+                            ? i
+                            : column.Value == typeof(DateTime)
+                                ? DateTime.Now.AddMonths(i)
+                                : $"{column.Key}{i}"
+                );
+            }
+
+            return row;
+        });
+    }
+}
