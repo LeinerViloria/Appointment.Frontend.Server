@@ -1,0 +1,17 @@
+[
+    {
+        "Name": "Configuration module",
+        "Url": "https://configurationmodulebackend20240519113346.azurewebsites.net/",
+        "EndPoints": [
+            "Catalogue", "Contract", "Employee", "Service"
+        ]
+    },
+    {
+        "Name": "Customer module",
+        "Url": "https://customermodulebackend20240520205729.azurewebsites.net/",
+        "EndPoints": [
+            "Appointment", "AppointmentDetail", "Customer"
+        ]
+    }
+]
+  

@@ -1,9 +1,12 @@
+using Appointment.Frontend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+builder.Services.AddSingleton(typeof(LocalDataService));
+builder.Services.AddScoped(typeof(ApiService));
 
 var app = builder.Build();
 

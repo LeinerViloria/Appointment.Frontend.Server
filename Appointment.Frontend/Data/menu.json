@@ -1,0 +1,39 @@
+[
+    {
+        "Icon": "home",
+        "Name": "Home",
+        "Url": "/"
+    },
+    {
+        "Icon": "home",
+        "Name": "Gestión interna",
+        "SubMenu": [
+            {
+                "Icon": "home",
+                "Name": "Catálogos",
+                "Url": "/Catalogue"
+            },
+            {
+                "Icon": "home",
+                "Name": "Servicios",
+                "Url": "/Service"
+            }
+        ]
+    },
+    {
+        "Icon": "home",
+        "Name": "Servicios",
+        "SubMenu": [
+            {
+                "Icon": "home",
+                "Name": "Empleados",
+                "Url": "/Employee"
+            },
+            {
+                "Icon": "home",
+                "Name": "Contratos",
+                "Url": "/Contract"
+            }
+        ]
+    }
+]
