@@ -7,6 +7,7 @@ public abstract class BaseModule<T>(IServiceProvider serviceProvider) : IBaseMod
 {
     public T Entity {get; set;} = Activator.CreateInstance<T>();
     public abstract string PluralName {get; set;}
+    public abstract string SingularName {get; set;}
     public abstract Dictionary<string, Type> GridColumns {get; set;}
     public string ModuleName => GetType().Name.Replace("Module", "");
 

@@ -6,6 +6,7 @@ namespace Appointment.Frontend.Modules;
 public class ContractModule(IServiceProvider serviceProvider) : BaseModule<Contract>(serviceProvider)
 {
     public override string PluralName {get; set;} = "Contratos";
+    public override string SingularName {get; set;} = "Contrato";
     public override Dictionary<string, Type> GridColumns {get; set;} = new()
     {
         {nameof(Contract.Id), typeof(Contract).GetProperty("Id")!.PropertyType},

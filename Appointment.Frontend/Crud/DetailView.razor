@@ -1,3 +1,40 @@
 @page "/{ViewRoute}/detail/{Rowid}"
 
 @inherits DynamicBaseView
+
+<PageTitle>Ver</PageTitle>
+
+@code
+{
+    protected override void OnInitialized()
+    {
+        InitView();
+
+        base.OnInitialized();
+    }
+
+    private void InitView()
+    {
+        ViewIsReady = true;
+        LastViewRoute = ViewRoute;
+        RouteIsValid = ApiService.EndPointIsSaved(ViewRoute);
+
+        if(RouteIsValid)
+        {
+            SearchModule();
+        }
+
+        SetEntity();
+    }
+
+    protected override void OnParametersSet()
+    {
+        if(ViewRoute != LastViewRoute)
+        {
+            InitView();
+            StateHasChanged();
+        }
+
+        base.OnParametersSet();
+    }
+}
