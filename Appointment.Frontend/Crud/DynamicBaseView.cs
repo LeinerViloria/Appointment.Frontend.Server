@@ -87,9 +87,16 @@ public abstract class DynamicBaseView : ComponentBase
             return;
         }
 
-        var Response = JsonConvert.DeserializeObject<BadRequestResponse>(Request.Result)!;
-
-        await ModalError.ShowModal(DialogService, Response.Title, string.Join(" \n ", Response.Errors.Name));
+        try
+        {
+            var Response = JsonConvert.DeserializeObject<BadRequestResponse>(Request.Result)!;
+            await ModalError.ShowModal(DialogService, Response.Title, string.Join(" \n ", Response.Errors.Select(x => string.Join("\n",x.Value))));
+        }
+        catch
+        {
+            var DictionaryResponse = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(Request.Result)!;
+            await ModalError.ShowModal(DialogService, "Ocurrió un error", string.Join(" \n ", DictionaryResponse.Select(x => string.Join("\n",x.Value))));
+        }
 
         IsBusy = false;
     }
