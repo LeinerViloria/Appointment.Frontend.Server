@@ -9,10 +9,11 @@
         Value="Data"
         class="w-100"
         ValueChanged="SetValue"
+        Disabled="@(Data.Count == 0)"
         AllowClear="true">
 
         <EmptyTemplate>
-            <span>No hay datos cargados</span>
+            <span>No hay datos</span>
         </EmptyTemplate>
 
         <Template Context="Item">
@@ -50,7 +51,7 @@
         }
     }
 
-    void SetValue(object Rowid)
+    void SetValue(object? Rowid)
     {
 
     }
