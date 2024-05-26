@@ -38,6 +38,11 @@ public abstract class DynamicBaseView : ComponentBase
             .GetValue(Module)!;
     }
 
+    protected void NavigateToList()
+    {
+        NavigationManager.NavigateTo(Module.GetModuleName());
+    }
+
     protected void HandleInvalidSubmit()
     {
 

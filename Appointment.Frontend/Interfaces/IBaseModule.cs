@@ -12,4 +12,5 @@ public interface IBaseModule
     Task<List<object>> GetData();
     Task<bool> Delete(object Rowid);
     RenderFragment GetForm(ViewType ViewType);
+    string GetModuleName();
 }

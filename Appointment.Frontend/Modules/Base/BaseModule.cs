@@ -15,6 +15,8 @@ public abstract class BaseModule<T>(IServiceProvider serviceProvider) : IBaseMod
 
     public abstract RenderFragment GetForm(ViewType ViewType);
 
+    public string GetModuleName() => ModuleName;
+
     public virtual async Task<List<object>> GetData()
     {
         var ApiService = serviceProvider.GetService<ApiService>()!;

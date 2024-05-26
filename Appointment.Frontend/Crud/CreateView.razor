@@ -3,10 +3,12 @@
 
 @inherits DynamicBaseView
 
-<PageTitle>Crear</PageTitle>
+<PageTitle>Crear @Module.SingularName</PageTitle>
+
+<h3>Crear @Module.SingularName</h3>
 
 <RadzenStack Orientation="@Orientation.Horizontal" JustifyContent="@JustifyContent.End">
-    <RadzenButton Disabled="@IsBusy" Variant="Variant.Flat" Text="Cancelar" ButtonStyle="ButtonStyle.Warning" />
+    <RadzenButton Disabled="@IsBusy" Click="NavigateToList" Variant="Variant.Flat" Text="Cancelar" ButtonStyle="ButtonStyle.Warning" />
     <RadzenButton form="@FormId" ButtonType="ButtonType.Submit" Variant="Variant.Flat" Text="Guardar" ButtonStyle="ButtonStyle.Primary" IsBusy=@IsBusy />
 </RadzenStack>
 
