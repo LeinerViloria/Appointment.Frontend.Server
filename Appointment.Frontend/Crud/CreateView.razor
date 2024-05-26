@@ -6,14 +6,19 @@
 <PageTitle>Crear</PageTitle>
 
 <RadzenStack Orientation="@Orientation.Horizontal" JustifyContent="@JustifyContent.End">
-    <p>Cancelar</p>
-    <p>Guardar</p>
+    <RadzenButton Disabled="@IsBusy" Variant="Variant.Flat" Text="Cancelar" ButtonStyle="ButtonStyle.Warning" />
+    <RadzenButton form="@FormId" ButtonType="ButtonType.Submit" Variant="Variant.Flat" Text="Guardar" ButtonStyle="ButtonStyle.Primary" IsBusy=@IsBusy />
 </RadzenStack>
 
-<EditForm Model="@Entity">
+<EditForm id="@FormId" 
+    OnValidSubmit="@HandleValidSubmit"
+    OnInvalidSubmit="@HandleInvalidSubmit" 
+    EditContext="@EditFormContext">
+
     <CascadingValue Value="@this">
         @Module.GetForm(ViewType.Create)
     </CascadingValue>
+
 </EditForm>
 
 @code

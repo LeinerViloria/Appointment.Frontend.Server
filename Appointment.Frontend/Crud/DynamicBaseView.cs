@@ -3,6 +3,7 @@ using Appointment.Frontend.Interfaces;
 using Appointment.Frontend.Services;
 using Appointment.Frontend.Utils;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 
 namespace Appointment.Frontend.Crud;
 
@@ -19,6 +20,9 @@ public abstract class DynamicBaseView : ComponentBase
     protected IBaseModule Module { get; set; } = null!;
     protected string LastViewRoute {get; set;} = null!;
     public object Entity {get; set;} = null!;
+    public string FormId {get; set;} = $"{Guid.NewGuid()}";
+    public EditContext EditFormContext;
+    protected bool IsBusy {get; set;}
 
     protected void SearchModule()
     {
@@ -28,8 +32,21 @@ public abstract class DynamicBaseView : ComponentBase
 
     protected void SetEntity()
     {
+        EditFormContext ??= new EditContext(this);
         Entity = Module.GetType()
             .GetProperty("Entity")!
             .GetValue(Module)!;
+    }
+
+    protected void HandleInvalidSubmit()
+    {
+
+    }
+
+    protected async Task HandleValidSubmit()
+    {
+        IsBusy = true;
+        var Result = EditFormContext.Validate();
+        
     }
 }

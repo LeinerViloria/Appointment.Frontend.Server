@@ -9,5 +9,16 @@ public abstract class BaseFormComponent<T> : ComponentBase
 {
     [Parameter] public ViewType ViewType { get; set; }
     [CascadingParameter] public DynamicBaseView View {get; set;} = null!;
-    protected T Entity {get; set;} = Activator.CreateInstance<T>();
+    protected T Entity {get; set;} = default!;
+
+    protected void InitEntity()
+    {
+        Entity = (T) View.Entity;
+    }
+
+    protected override void OnInitialized()
+    {
+        InitEntity();
+        base.OnInitialized();
+    }
 }

@@ -3,7 +3,7 @@
 
 @inherits BaseFormComponent<Catalogue>
 
-<div>
+<div class="d-flex flex-column w-50">
     <RadzenLabel Text="Nombre" />
     <RadzenTextBox @bind-Value="@Entity.Name" />
     <ValidationMessage For="@(() => @Entity.Name)" />
