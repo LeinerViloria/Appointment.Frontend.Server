@@ -1,3 +1,10 @@
 @using Appointment.Frontend.Components.Base
+@using Configuration.Entities
 
-@inherits BaseFormComponent
+@inherits BaseFormComponent<Catalogue>
+
+<div>
+    <RadzenLabel Text="Nombre" />
+    <RadzenTextBox @bind-Value="@Entity.Name" />
+    <ValidationMessage For="@(() => @Entity.Name)" />
+</div>

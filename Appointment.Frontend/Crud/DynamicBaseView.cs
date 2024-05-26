@@ -18,7 +18,7 @@ public abstract class DynamicBaseView : ComponentBase
     protected bool RouteIsValid {get; set;}
     protected IBaseModule Module { get; set; } = null!;
     protected string LastViewRoute {get; set;} = null!;
-    protected object Entity {get; set;} = null!;
+    public object Entity {get; set;} = null!;
 
     protected void SearchModule()
     {

@@ -10,9 +10,11 @@
     <p>Guardar</p>
 </RadzenStack>
 
-<CascadingValue Value="@this">
-    @Module.GetForm(ViewType.Create)
-</CascadingValue>
+<EditForm Model="@Entity">
+    <CascadingValue Value="@this">
+        @Module.GetForm(ViewType.Create)
+    </CascadingValue>
+</EditForm>
 
 @code
 {
