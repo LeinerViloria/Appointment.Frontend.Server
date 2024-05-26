@@ -1,5 +1,7 @@
 
+using Appointment.Globals.Enums;
 using Configuration.Entities;
+using Microsoft.AspNetCore.Components;
 
 namespace Appointment.Frontend.Modules;
 
@@ -13,5 +15,10 @@ public class ContractModule(IServiceProvider serviceProvider) : BaseModule<Contr
         {nameof(Contract.Employee), typeof(Contract).GetProperty("Employee")!.PropertyType},
         {nameof(Contract.InitialDate), typeof(Contract).GetProperty("InitialDate")!.PropertyType},
         {nameof(Contract.EndDate), typeof(Contract).GetProperty("EndDate")!.PropertyType}
+    };
+
+    public override RenderFragment GetForm(ViewType ViewType) => (builder) =>
+    {
+        
     };
 }

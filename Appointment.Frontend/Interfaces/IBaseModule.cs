@@ -1,4 +1,7 @@
 
+using Appointment.Globals.Enums;
+using Microsoft.AspNetCore.Components;
+
 namespace Appointment.Frontend.Interfaces;
 
 public interface IBaseModule
@@ -8,4 +11,5 @@ public interface IBaseModule
     Dictionary<string, Type> GridColumns {get; set;}
     Task<List<object>> GetData();
     Task<bool> Delete(object Rowid);
+    RenderFragment GetForm(ViewType ViewType);
 }

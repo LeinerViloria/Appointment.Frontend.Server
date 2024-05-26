@@ -1,5 +1,7 @@
 using Appointment.Frontend.Interfaces;
 using Appointment.Frontend.Services;
+using Appointment.Globals.Enums;
+using Microsoft.AspNetCore.Components;
 
 namespace Appointment.Frontend.Modules;
 
@@ -10,6 +12,8 @@ public abstract class BaseModule<T>(IServiceProvider serviceProvider) : IBaseMod
     public abstract string SingularName {get; set;}
     public abstract Dictionary<string, Type> GridColumns {get; set;}
     public string ModuleName => GetType().Name.Replace("Module", "");
+
+    public abstract RenderFragment GetForm(ViewType ViewType);
 
     public virtual async Task<List<object>> GetData()
     {

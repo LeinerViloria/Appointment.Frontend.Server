@@ -1,5 +1,7 @@
 
+using Appointment.Globals.Enums;
 using Configuration.Entities;
+using Microsoft.AspNetCore.Components;
 
 namespace Appointment.Frontend.Modules;
 
@@ -11,5 +13,10 @@ public class ServiceModule(IServiceProvider serviceProvider) : BaseModule<Servic
     {
         {nameof(Service.Name), typeof(Service).GetProperty("Name")!.PropertyType},
         {nameof(Service.Price), typeof(Service).GetProperty("Price")!.PropertyType}
+    };
+
+    public override RenderFragment GetForm(ViewType ViewType) => (builder) =>
+    {
+        
     };
 }

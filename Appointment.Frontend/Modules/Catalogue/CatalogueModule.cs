@@ -1,5 +1,7 @@
 
+using Appointment.Globals.Enums;
 using Configuration.Entities;
+using Microsoft.AspNetCore.Components;
 
 namespace Appointment.Frontend.Modules;
 
@@ -10,5 +12,10 @@ public class CatalogueModule(IServiceProvider serviceProvider) : BaseModule<Cata
     public override Dictionary<string, Type> GridColumns {get; set;} = new()
     {
         {nameof(Catalogue.Name), typeof(Catalogue).GetProperty("Name")!.PropertyType}
+    };
+
+    public override RenderFragment GetForm(ViewType ViewType) => (builder) =>
+    {
+        
     };
 }

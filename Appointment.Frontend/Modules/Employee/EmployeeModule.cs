@@ -1,5 +1,7 @@
 
+using Appointment.Globals.Enums;
 using Configuration.Entities;
+using Microsoft.AspNetCore.Components;
 
 namespace Appointment.Frontend.Modules;
 
@@ -12,5 +14,10 @@ public class EmployeeModule(IServiceProvider serviceProvider) : BaseModule<Emplo
         {nameof(Employee.Id), typeof(Employee).GetProperty("Id")!.PropertyType},
         {nameof(Employee.Name), typeof(Employee).GetProperty("Name")!.PropertyType},
         {nameof(Employee.Gender), typeof(Employee).GetProperty("Gender")!.PropertyType}
+    };
+
+    public override RenderFragment GetForm(ViewType ViewType) => (builder) =>
+    {
+        
     };
 }
