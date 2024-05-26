@@ -2,6 +2,7 @@
     "Catalogue.Name": "Nombre",
     "Service.Name": "Nombre",
     "Service.Price": "Precio",
+    "Service.Catalogue": "Catálogo",
     "Employee.Id": "Identificación",
     "Employee.Name": "Nombre",
     "Employee.Gender": "Género",
