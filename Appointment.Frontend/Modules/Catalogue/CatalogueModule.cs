@@ -1,4 +1,5 @@
 
+using Appointment.Frontend.Components.Catalogue;
 using Appointment.Globals.Enums;
 using Configuration.Entities;
 using Microsoft.AspNetCore.Components;
@@ -16,6 +17,8 @@ public class CatalogueModule(IServiceProvider serviceProvider) : BaseModule<Cata
 
     public override RenderFragment GetForm(ViewType ViewType) => (builder) =>
     {
-        
+        builder.OpenComponent<CatalogueForm>(0);
+        builder.AddAttribute(1, "ViewType", ViewType);
+        builder.CloseComponent();
     };
 }

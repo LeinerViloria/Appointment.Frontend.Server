@@ -1,8 +1,18 @@
 @page "/{ViewRoute}/edit/{Rowid}"
+@using Appointment.Globals.Enums
 
 @inherits DynamicBaseView
 
 <PageTitle>Editar</PageTitle>
+
+<RadzenStack Orientation="@Orientation.Horizontal" JustifyContent="@JustifyContent.End">
+    <p>Cancelar</p>
+    <p>Guardar</p>
+</RadzenStack>
+
+<CascadingValue Value="@this">
+    @Module.GetForm(ViewType.Edit)
+</CascadingValue>
 
 @code
 {

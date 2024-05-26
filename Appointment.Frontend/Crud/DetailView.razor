@@ -1,8 +1,17 @@
 @page "/{ViewRoute}/detail/{Rowid}"
+@using Appointment.Globals.Enums
 
 @inherits DynamicBaseView
 
 <PageTitle>Ver</PageTitle>
+
+<RadzenStack Orientation="@Orientation.Horizontal" JustifyContent="@JustifyContent.End">
+    <p>Ver lista</p>
+</RadzenStack>
+
+<CascadingValue Value="@this">
+    @Module.GetForm(ViewType.Detail)
+</CascadingValue>
 
 @code
 {

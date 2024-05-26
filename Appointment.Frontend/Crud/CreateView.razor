@@ -1,4 +1,5 @@
 @page "/{ViewRoute}/create"
+@using Appointment.Globals.Enums
 
 @inherits DynamicBaseView
 
@@ -8,6 +9,10 @@
     <p>Cancelar</p>
     <p>Guardar</p>
 </RadzenStack>
+
+<CascadingValue Value="@this">
+    @Module.GetForm(ViewType.Create)
+</CascadingValue>
 
 @code
 {
