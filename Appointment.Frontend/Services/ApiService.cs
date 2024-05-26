@@ -40,4 +40,26 @@ public class ApiService(IConfiguration configurationManager)
         return Result;
     }
 
+    public async Task<bool> Delete(string Module, object Rowid)
+    {
+        using var client = new HttpClient();
+
+        var Url = EndPoints
+            .Where(x => 
+                x.EndPoints.Exists(y => string.Equals(y, Module, StringComparison.OrdinalIgnoreCase))
+            ).Select(x => x.Url)
+            .Single();
+
+        var Request = await client.DeleteAsync($"{Url}api/{Module}/{Rowid}");
+
+        if(!Request.IsSuccessStatusCode)
+            return false;
+
+        string responseContent = await Request.Content.ReadAsStringAsync();
+
+        var Result = !string.IsNullOrEmpty(responseContent) && responseContent != "0";
+
+        return Result;
+    }
+
 }

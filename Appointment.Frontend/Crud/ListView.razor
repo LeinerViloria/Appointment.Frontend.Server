@@ -24,7 +24,7 @@
                                 <i class="fa-solid fa-pen"></i>
                             </div>
                         </RadzenButton>
-                        <RadzenButton Click=@(args => OnDelete()) ButtonStyle="ButtonStyle.Danger" Size="ButtonSize.ExtraSmall">
+                        <RadzenButton Click=@(args => OnDelete(Item)) ButtonStyle="ButtonStyle.Danger" Size="ButtonSize.ExtraSmall">
                             <div>
                                 <i class="fa-solid fa-trash"></i>
                             </div>
@@ -111,11 +111,17 @@ else
         {
             var row = new Dictionary<string, object?>();
 
+            var Rowid = EntityType.GetProperty("Rowid")?
+                .GetValue(i);
+
+            if(Rowid is not null)
+                row.TryAdd("Rowid", Rowid);
+
             foreach (var column in columns)
             {
                 var Value = EntityType.GetProperty(column.Key)!
                     .GetValue(i);
-                row.Add(
+                row.TryAdd(
                     column.Key,
                     Value
                 );
@@ -157,9 +163,19 @@ else
 
     }
 
-    void OnDelete()
+    async Task OnDelete(IDictionary<string, object> Item)
     {
+        Item.TryGetValue("Rowid", out var Rowid);
 
+        if(Rowid is null)
+            return;
+
+        var Result = await Module.Delete(Rowid);
+
+        if(!Result)
+            return;
+
+        _ = InitView();
     }
 
     void OnDetail()
