@@ -5,7 +5,7 @@
 
 @if(MenuItems is not null)
 {
-    <RadzenDropDown TValue="string" @ref=@radzenDropDown @bind-SearchText=SearchText FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+    <RadzenDropDown TValue="string" @ref=@radzenDropDown @bind-SearchText=SearchText FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.Contains" AllowFiltering="true"
                     Data=@MenuItems TextProperty="Name" ValueProperty="Url" AllowClear="true" Value=value ValueChanged="Navigate" Style="width: 100%; max-width: 400px;" Name="DropDownFiltering" Placeholder="Buscar...">
         <Template Context="Item">
             <span>

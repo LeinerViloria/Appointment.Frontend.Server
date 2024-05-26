@@ -1,17 +1,22 @@
 
 @typeparam TValue
+@typeparam TProperty
 
 @using Appointment.Frontend.Services
 
 <div>
-    <RadzenDropDown TValue="string" 
+    <RadzenDropDown TValue="string"
         @bind-SearchText=SearchText 
+        FilterOperator="StringFilterOperator.StartsWith"
         Placeholder="Buscar..."
+        TextProperty="@FilterBy"
         ValueProperty="Rowid"
-        Value="Data"
+        Data="Data"
+        Value=SelectedValue
         class="w-100"
+        Name="@($"EntityFiltering-{Id}")"
+        AllowFiltering="true"
         ValueChanged="SetValue"
-        Disabled="@(Data.Count == 0)"
         AllowClear="true">
 
         <EmptyTemplate>
@@ -19,12 +24,22 @@
         </EmptyTemplate>
 
         <Template Context="Item">
-
+            @if(CustomString is null)
+            {
+                @Item.ToString()
+            }else{
+                @CustomString(Item)
+            }
         </Template>
-
-        <ValueTemplate>
-
-        </ValueTemplate>
+@* 
+        <ValueTemplate Context="Item">
+            @if(CustomString is null)
+            {
+                @Item.ToString()
+            }else{
+                @CustomString(Item)
+            }
+        </ValueTemplate> *@
 
     </RadzenDropDown>
 </div>
@@ -34,9 +49,15 @@
     [Parameter] public TValue Value {get; set;} = default!;
     [Parameter] public EventCallback<TValue> ValueChanged {get; set;}
     [Parameter] public string PropertyName {get; set;} = null!;
+    [Parameter] public string EndPoint {get; set;} = null!;
+    [Parameter] public string FilterBy {get; set;} = "Name";
+    [Parameter] public Func<dynamic, string>? CustomString {get; set;}
     [Inject] public ApiService ApiService {get; set;} = null!;
 
-    List<object> Data {get; set;} = new();
+    List<TProperty> Data {get; set;} = new();
+    bool Loading {get; set;}
+    string Id {get;set;} = $"{Guid.NewGuid()}";
+    string? SelectedValue {get; set;}
     
     string searchText = "";
     public string SearchText
@@ -62,7 +83,15 @@
 
     async Task Search()
     {
+        if(Loading)
+            return;
 
+        Loading = true;
+
+        Data = await ApiService.GetAll<TProperty>(EndPoint);
+        StateHasChanged();
+
+        Loading = false;
     }
 
     void SetValue(object? Rowid)

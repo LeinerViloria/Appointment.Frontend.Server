@@ -5,46 +5,58 @@
 
 @inherits BaseFormComponent<Service>
 
-<div class="mt-2">
+@if(Entity is not null)
+{
+    <div class="mt-2">
     
-    <RadzenRow Gap="1rem" RowGap="0.5rem">
+        <RadzenRow Gap="1rem" RowGap="0.5rem">
 
-        <RadzenColumn class="rz-p-5 d-flex flex-column custom-column">
-            <RadzenLabel Text="Nombre" />
-            <RadzenTextBox @bind-Value="@Entity.Name" />
-            <ValidationMessage For="@(() => @Entity.Name)" />
-        </RadzenColumn>
+            <RadzenColumn class="rz-p-5 d-flex flex-column custom-column">
+                <RadzenLabel Text="Nombre" />
+                <RadzenTextBox @bind-Value="@Entity.Name" />
+                <ValidationMessage For="@(() => @Entity.Name)" />
+            </RadzenColumn>
 
-        <RadzenColumn class="rz-p-5 d-flex flex-column custom-column">
-            <RadzenLabel Text="Precio" />
-            <RadzenNumeric TValue="decimal" Min="0" Format="$######0" @bind-Value=@Entity.Price InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "enter value" }})" />
-            <ValidationMessage For="@(() => @Entity.Price)" />
-        </RadzenColumn>
+            <RadzenColumn class="rz-p-5 d-flex flex-column custom-column">
+                <RadzenLabel Text="Precio" />
+                <RadzenNumeric TValue="decimal" Min="0" Format="$######0" @bind-Value=@Entity.Price InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "enter value" }})" />
+                <ValidationMessage For="@(() => @Entity.Price)" />
+            </RadzenColumn>
 
-        <RadzenColumn class="rz-p-5 d-flex flex-column custom-column">
-            <RadzenLabel Text="Estado" />
-            <RadzenSelectBar @bind-Value=@Entity.Status TValue="EnumRecordStatus">
-                <Items>
-                    @foreach(var Item in Enum.GetValues<EnumRecordStatus>())
-                    {
-                        <RadzenSelectBarItem Value="@Item" Text="@TranslatorService.GetMessage($"Enum.EnumRecordStatus.{Item}")" />
-                    }
-                </Items>
-            </RadzenSelectBar>
-            <ValidationMessage For="@(() => @Entity.Name)" />
-        </RadzenColumn>
+            <RadzenColumn class="rz-p-5 d-flex flex-column custom-column">
+                <RadzenLabel Text="Estado" />
+                <RadzenSelectBar @bind-Value=@Entity.Status TValue="EnumRecordStatus">
+                    <Items>
+                        @foreach(var Item in Enum.GetValues<EnumRecordStatus>())
+                        {
+                            <RadzenSelectBarItem Value="@Item" Text="@TranslatorService.GetMessage($"Enum.EnumRecordStatus.{Item}")" />
+                        }
+                    </Items>
+                </RadzenSelectBar>
+                <ValidationMessage For="@(() => @Entity.Name)" />
+            </RadzenColumn>
 
-        <RadzenColumn class="rz-p-5 d-flex flex-column custom-column">
-            <RadzenLabel Text="Catálogo" />
-            <EntityField @bind-Value="@Entity" PropertyName="@nameof(Service.Catalogue)" />
-            <ValidationMessage For="@(() => @Entity.Catalogue)" />
-        </RadzenColumn>
+            <RadzenColumn class="rz-p-5 d-flex flex-column custom-column">
+                <RadzenLabel Text="Catálogo" />
+                <EntityField @bind-Value="@Entity" TValue="Service" TProperty="Catalogue" PropertyName="@nameof(Service.Catalogue)" EndPoint="Catalogue" CustomString="@GetCatalogueString" />
+                <ValidationMessage For="@(() => @Entity.Catalogue)" />
+            </RadzenColumn>
 
-        <RadzenColumn Size="12" class="rz-p-5 d-flex flex-column custom-column">
-            <RadzenLabel Text="Description" />
-            <RadzenTextBox @bind-Value="@Entity.Description" />
-            <ValidationMessage For="@(() => @Entity.Description)" />
-        </RadzenColumn>
-    </RadzenRow>
+            <RadzenColumn Size="12" class="rz-p-5 d-flex flex-column custom-column">
+                <RadzenLabel Text="Description" />
+                <RadzenTextBox @bind-Value="@Entity.Description" />
+                <ValidationMessage For="@(() => @Entity.Description)" />
+            </RadzenColumn>
+        </RadzenRow>
 
-</div>
+    </div>
+}
+
+@code
+{
+    public string GetCatalogueString(dynamic Item)
+    {
+        var Obj = (Catalogue) Item;
+        return Obj.Name;
+    }
+}
