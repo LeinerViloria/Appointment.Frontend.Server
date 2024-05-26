@@ -1,7 +1,6 @@
 
 using System.Text;
 using Appointment.Frontend.DTOS;
-using Appointment.Frontend.Utils;
 using Newtonsoft.Json;
 
 namespace Appointment.Frontend.Services;

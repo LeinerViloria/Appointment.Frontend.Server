@@ -1,6 +1,8 @@
 
 @typeparam TValue
 
+@using Appointment.Frontend.Services
+
 <div>
     <RadzenDropDown TValue="string" 
         @bind-SearchText=SearchText 
@@ -32,6 +34,7 @@
     [Parameter] public TValue Value {get; set;} = default!;
     [Parameter] public EventCallback<TValue> ValueChanged {get; set;}
     [Parameter] public string PropertyName {get; set;} = null!;
+    [Inject] public ApiService ApiService {get; set;} = null!;
 
     List<object> Data {get; set;} = new();
     
@@ -49,6 +52,17 @@
                 searchText = value;
             }
         }
+    }
+
+    protected override void OnInitialized()
+    {
+        _ = Search();
+        base.OnInitialized();
+    }
+
+    async Task Search()
+    {
+
     }
 
     void SetValue(object? Rowid)
