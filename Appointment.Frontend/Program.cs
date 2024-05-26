@@ -1,13 +1,16 @@
 using Appointment.Frontend.Services;
+using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+builder.Services.AddScoped<DialogService>();
 builder.Services.AddSingleton(typeof(LocalDataService));
 builder.Services.AddScoped(typeof(ApiService));
 builder.Services.AddScoped(typeof(TranslatorService));
+builder.Services.AddScoped(typeof(ModalError));
 
 var app = builder.Build();
 

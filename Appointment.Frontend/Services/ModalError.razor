@@ -1,0 +1,15 @@
+
+
+@code
+{
+    public async Task ShowModal(DialogService DialogService, string Title, string Message)
+    {
+        await DialogService.OpenAsync("Ocurrió un error", 
+        ds => @<div>
+                <h3>@Title</h3>
+                <span>
+                    @Message
+                </span>
+            </div>);
+    }
+}

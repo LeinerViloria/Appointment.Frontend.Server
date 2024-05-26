@@ -4,6 +4,7 @@ using Appointment.Frontend.Services;
 using Appointment.Frontend.Utils;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Radzen;
 
 namespace Appointment.Frontend.Crud;
 
@@ -15,6 +16,8 @@ public abstract class DynamicBaseView : ComponentBase
     [Inject] public IServiceProvider ServiceProvider { get; set; } = null!;
     [Inject] public TranslatorService TranslatorService {get; set; } = null!;
     [Inject] public NavigationManager NavigationManager { get; set; } = null!;
+    [Inject] public ModalError ModalError {get; set;} = null!;
+    [Inject] public DialogService DialogService {get; set; } = null!;
     protected bool ViewIsReady {get; set;}
     protected bool RouteIsValid {get; set;}
     protected IBaseModule Module { get; set; } = null!;
@@ -52,6 +55,6 @@ public abstract class DynamicBaseView : ComponentBase
     {
         IsBusy = true;
         var Result = EditFormContext.Validate();
-        
+        await ModalError.ShowModal(DialogService, "Error", "Testeo");
     }
 }
