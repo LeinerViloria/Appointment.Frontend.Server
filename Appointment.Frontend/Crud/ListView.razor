@@ -36,12 +36,6 @@ else
 
     public IDictionary<string, Type> columns { get; set; }
 
-    public enum EnumTest
-    {
-        EnumValue1,
-        EnumValue2
-    }
-
     public string GetColumnPropertyExpression(string name, Type type)
     {
         var expression = $@"it[""{name}""].ToString()";
@@ -82,9 +76,7 @@ else
             {
                 row.Add(
                     column.Key,
-                    column.Value == typeof(EnumTest)
-                        ? (i % 2 == 0 ? EnumTest.EnumValue1 : EnumTest.EnumValue2)
-                        : column.Value == typeof(int)
+                    column.Value == typeof(int)
                             ? i
                             : column.Value == typeof(DateTime)
                                 ? DateTime.Now.AddMonths(i)
