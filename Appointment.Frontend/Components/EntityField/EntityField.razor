@@ -5,7 +5,7 @@
 @using Appointment.Frontend.Services
 
 <div>
-    <RadzenDropDown TValue="string"
+    <RadzenDropDown TValue="object"
         @bind-SearchText=SearchText 
         FilterOperator="StringFilterOperator.StartsWith"
         Placeholder="Buscar..."
@@ -96,6 +96,9 @@
 
     void SetValue(object? Rowid)
     {
+        var PropertyType = typeof(TValue)
+            .GetProperty($"Rowid{PropertyName}")!;
 
+        PropertyType.SetValue(Value, Rowid ?? default);
     }
 }
