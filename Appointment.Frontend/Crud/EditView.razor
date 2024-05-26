@@ -3,7 +3,7 @@
 
 @inherits DynamicBaseView
 
-@if(ViewIsReady && RouteIsValid && Entity is not null)
+@if(ViewIsReady && RouteIsValid && Entity is not null && ((dynamic) Entity).Rowid > 0)
 {
     <PageTitle>Editar @Module.SingularName</PageTitle>
     
@@ -24,7 +24,7 @@
         </CascadingValue>
 
     </EditForm>
-}else if(ViewIsReady && !RouteIsValid)
+}else if(ViewIsReady && (!RouteIsValid || ((dynamic?) Entity)?.Rowid == 0))
 {
     <p>Ruta inválida</p>
 }
