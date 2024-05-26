@@ -1,4 +1,5 @@
 
+using Appointment.Frontend.Components.Employee;
 using Appointment.Globals.Enums;
 using Configuration.Entities;
 using Microsoft.AspNetCore.Components;
@@ -18,6 +19,8 @@ public class EmployeeModule(IServiceProvider serviceProvider) : BaseModule<Emplo
 
     public override RenderFragment GetForm(ViewType ViewType) => (builder) =>
     {
-        
+        builder.OpenComponent<EmployeeForm>(0);
+        builder.AddAttribute(1, "ViewType", ViewType);
+        builder.CloseComponent();
     };
 }
