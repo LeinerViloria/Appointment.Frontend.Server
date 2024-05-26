@@ -30,7 +30,7 @@
                                 <i class="fa-solid fa-trash"></i>
                             </div>
                         </RadzenButton>
-                        <RadzenButton Click=@(args => OnDetail()) ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.ExtraSmall">
+                        <RadzenButton Click=@(args => OnDetail(Item)) ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.ExtraSmall">
                             <div>
                                 <i class="fa-solid fa-eye"></i>
                             </div>
@@ -205,8 +205,13 @@ else
         _ = InitView();
     }
 
-    void OnDetail()
+    void OnDetail(IDictionary<string, object> Item)
     {
+        Item.TryGetValue("Rowid", out var Rowid);
+
+        if(Rowid is null)
+            return;
         
+        NavigationManager.NavigateTo($"{ViewRoute}/detail/{Rowid}");
     }
 }

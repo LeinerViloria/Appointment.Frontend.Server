@@ -3,10 +3,10 @@
 
 @inherits DynamicBaseView
 
-<PageTitle>Editar @Module.SingularName</PageTitle>
-
 @if(ViewIsReady && RouteIsValid && Entity is not null)
 {
+    <PageTitle>Editar @Module.SingularName</PageTitle>
+    
     <h3>Editar @Module.SingularName</h3>
 
     <RadzenStack Orientation="@Orientation.Horizontal" JustifyContent="@JustifyContent.End">
