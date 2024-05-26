@@ -72,28 +72,7 @@ else
             SearchModule();
         }
 
-        ViewIsReady = true;
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        InitView();
-
-        await base.OnInitializedAsync();
-
-        columns = new Dictionary<string, Type>()
-        {
-            { "EmployeeID", typeof(int) },
-            { "MyColumn", typeof(EnumTest) },
-            { "FirstName", typeof(string) },
-            { "LastName", typeof(string) },
-            { "HireDate", typeof(DateTime) },
-        };
-
-        foreach (var i in Enumerable.Range(0, 50))
-        {
-            columns.Add($"Column{i}", typeof(string));
-        }
+        columns = Module.GridColumns;
 
         data = Enumerable.Range(0, 20).Select(i =>
         {
@@ -115,6 +94,15 @@ else
 
             return row;
         });
+
+        ViewIsReady = true;
+    }
+
+    protected override void OnInitialized()
+    {
+        InitView();
+
+        base.OnInitialized();
     }
 
     protected override void OnParametersSet()

@@ -6,4 +6,5 @@ public abstract class BaseModule<T> : IBaseModule where T : class
 {
     public T Entity {get; set;} = default!;
     public abstract string PluralName {get; set;}
+    public abstract Dictionary<string, Type> GridColumns {get; set;}
 }
