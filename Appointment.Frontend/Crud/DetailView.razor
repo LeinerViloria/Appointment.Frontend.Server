@@ -44,7 +44,6 @@ else
 
     private async Task InitView()
     {
-        ViewIsReady = true;
         LastViewRoute = ViewRoute;
         RouteIsValid = ApiService.EndPointIsSaved(ViewRoute);
 
@@ -53,13 +52,24 @@ else
             SearchModule();
         }else
         {
+            ViewIsReady = true;
             return;
         }
 
         SetEditForm();
-        await Module.GetItem(Rowid);
+        SetEntity();
+
+        var ForeignKeys = Entity.GetType()
+            .GetProperties()
+            .Where(x => x.PropertyType.Namespace?.EndsWith(".Entities") ?? false)
+            .Select(x => x.PropertyType.Name)
+            .ToArray();
+
+        await Module.GetItem(Rowid, ForeignKeys);
 
         SetEntity();
+
+        ViewIsReady = true;
 
         StateHasChanged();
     }

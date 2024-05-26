@@ -49,8 +49,8 @@ public abstract class BaseModule<T>(IServiceProvider serviceProvider) : IBaseMod
         return Request;
     }
 
-    public virtual async Task GetItem(object Rowid)
+    public virtual async Task GetItem(object Rowid, params string[] foreignKeys)
     {
-        Entity = await ApiService.GetItem<T>(ModuleName, Rowid) ?? Activator.CreateInstance<T>();
+        Entity = await ApiService.GetItem<T>(ModuleName, Rowid, foreignKeys) ?? Activator.CreateInstance<T>();
     }
 }

@@ -13,19 +13,19 @@
 
             <RadzenColumn class="rz-p-5 d-flex flex-column custom-column">
                 <RadzenLabel Text="Nombre" />
-                <RadzenTextBox @bind-Value="@Entity.Name" />
+                <RadzenTextBox @bind-Value="@Entity.Name" Disabled="@(ViewType == ViewType.Detail)" />
                 <ValidationMessage For="@(() => @Entity.Name)" />
             </RadzenColumn>
 
             <RadzenColumn class="rz-p-5 d-flex flex-column custom-column">
                 <RadzenLabel Text="Precio" />
-                <RadzenNumeric TValue="decimal" Min="0" Format="$######0" @bind-Value=@Entity.Price InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "enter value" }})" />
+                <RadzenNumeric TValue="decimal" Disabled="@(ViewType == ViewType.Detail)" Min="0" Format="$######0" @bind-Value=@Entity.Price InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "enter value" }})" />
                 <ValidationMessage For="@(() => @Entity.Price)" />
             </RadzenColumn>
 
             <RadzenColumn class="rz-p-5 d-flex flex-column custom-column">
                 <RadzenLabel Text="Estado" />
-                <RadzenSelectBar @bind-Value=@Entity.Status TValue="EnumRecordStatus">
+                <RadzenSelectBar @bind-Value=@Entity.Status TValue="EnumRecordStatus" Disabled="@(ViewType == ViewType.Detail)">
                     <Items>
                         @foreach(var Item in Enum.GetValues<EnumRecordStatus>())
                         {
@@ -38,13 +38,19 @@
 
             <RadzenColumn class="rz-p-5 d-flex flex-column custom-column">
                 <RadzenLabel Text="Catálogo" />
-                <EntityField @bind-Value="@Entity" TValue="Service" TProperty="Catalogue" PropertyName="@nameof(Service.Catalogue)" EndPoint="Catalogue" CustomString="@GetCatalogueString" />
-                <ValidationMessage For="@(() => @Entity.Catalogue)" />
+                @if(ViewType == ViewType.Detail)
+                {
+                    <RadzenTextBox Value="@Entity.Catalogue?.ToString()" Disabled="true" />
+                }else
+                {
+                    <EntityField @bind-Value="@Entity" TValue="Service" TProperty="Catalogue" PropertyName="@nameof(Service.Catalogue)" EndPoint="Catalogue" CustomString="@GetCatalogueString" />
+                    <ValidationMessage For="@(() => @Entity.Catalogue)" />
+                }
             </RadzenColumn>
 
             <RadzenColumn Size="12" class="rz-p-5 d-flex flex-column custom-column">
                 <RadzenLabel Text="Description" />
-                <RadzenTextBox @bind-Value="@Entity.Description" />
+                <RadzenTextBox @bind-Value="@Entity.Description" Disabled="@(ViewType == ViewType.Detail)" />
                 <ValidationMessage For="@(() => @Entity.Description)" />
             </RadzenColumn>
         </RadzenRow>

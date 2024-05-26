@@ -15,5 +15,5 @@ public interface IBaseModule
     RenderFragment GetForm(ViewType ViewType);
     string GetModuleName();
     Task<ApiResponse> Save();
-    Task GetItem(object Rowid);
+    Task GetItem(object Rowid, params string[] foreignKeys);
 }
