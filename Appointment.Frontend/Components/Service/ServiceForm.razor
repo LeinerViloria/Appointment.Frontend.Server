@@ -1,4 +1,5 @@
 @using Appointment.Frontend.Components.Base
+@using Appointment.Globals.Enums
 @using Configuration.Entities
 
 @inherits BaseFormComponent<Service>
@@ -15,13 +16,20 @@
 
         <RadzenColumn class="rz-p-5 d-flex flex-column custom-column">
             <RadzenLabel Text="Precio" />
-            <RadzenTextBox @bind-Value="@Entity.Name" />
-            <ValidationMessage For="@(() => @Entity.Name)" />
+            <RadzenNumeric TValue="decimal" Min="0" Format="$######0" @bind-Value=@Entity.Price InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "enter value" }})" />
+            <ValidationMessage For="@(() => @Entity.Price)" />
         </RadzenColumn>
 
         <RadzenColumn class="rz-p-5 d-flex flex-column custom-column">
             <RadzenLabel Text="Estado" />
-            <RadzenTextBox @bind-Value="@Entity.Name" />
+            <RadzenSelectBar @bind-Value=@Entity.Status TValue="EnumRecordStatus" class="mb-5">
+                <Items>
+                    @foreach(var Item in Enum.GetValues<EnumRecordStatus>())
+                    {
+                        <RadzenSelectBarItem Value="@Item" Text="@TranslatorService.GetMessage($"Enum.EnumRecordStatus.{Item}")" />
+                    }
+                </Items>
+            </RadzenSelectBar>
             <ValidationMessage For="@(() => @Entity.Name)" />
         </RadzenColumn>
 

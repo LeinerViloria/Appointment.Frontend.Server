@@ -1,0 +1,3 @@
+.valid.modified:not([type=checkbox]) {
+    outline: transparent !important;
+}
