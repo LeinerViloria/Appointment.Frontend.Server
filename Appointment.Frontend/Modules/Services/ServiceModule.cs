@@ -13,7 +13,8 @@ public class ServiceModule(IServiceProvider serviceProvider) : BaseModule<Servic
     public override Dictionary<string, Type> GridColumns {get; set;} = new()
     {
         {nameof(Service.Name), typeof(Service).GetProperty("Name")!.PropertyType},
-        {nameof(Service.Price), typeof(Service).GetProperty("Price")!.PropertyType}
+        {nameof(Service.Price), typeof(Service).GetProperty("Price")!.PropertyType},
+        {nameof(Service.Status), typeof(Service).GetProperty("Status")!.PropertyType}
     };
 
     public override RenderFragment GetForm(ViewType ViewType) => (builder) =>

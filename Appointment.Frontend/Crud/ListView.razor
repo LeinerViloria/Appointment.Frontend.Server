@@ -43,7 +43,13 @@
                 <RadzenDataGridColumn Width="200px" @key=@column.Key Title="@TranslatorService.GetMessage($"{Entity.GetType().Name}.{@column.Key}")" Type="column.Value"
                                     Property="@GetColumnPropertyExpression(column.Key, column.Value)">
                     <Template>
-                        @context[@column.Key]
+                        @if(column.Value.IsEnum)
+                        {
+                            @TranslatorService.GetMessage($"Enum.{column.Value.Name}.{context[@column.Key]}")
+                        }else
+                        {
+                            @context[@column.Key]
+                        }
                     </Template>
                 </RadzenDataGridColumn>
             }
