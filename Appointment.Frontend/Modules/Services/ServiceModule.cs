@@ -1,4 +1,5 @@
 
+using Appointment.Frontend.Components.Service;
 using Appointment.Globals.Enums;
 using Configuration.Entities;
 using Microsoft.AspNetCore.Components;
@@ -17,6 +18,8 @@ public class ServiceModule(IServiceProvider serviceProvider) : BaseModule<Servic
 
     public override RenderFragment GetForm(ViewType ViewType) => (builder) =>
     {
-        
+        builder.OpenComponent<ServiceForm>(0);
+        builder.AddAttribute(1, "ViewType", ViewType);
+        builder.CloseComponent();
     };
 }
