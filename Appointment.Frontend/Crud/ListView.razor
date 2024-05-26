@@ -173,7 +173,24 @@ else
         var Result = await Module.Delete(Rowid);
 
         if(!Result)
+        {
+            NotificationService.Notify(new () 
+                { 
+                    Severity = NotificationSeverity.Error, 
+                    Summary = "Eliminar", 
+                    Detail = "No se pudo eliminar el registro", 
+                    Duration = 4000 
+                });
             return;
+        }
+
+        NotificationService.Notify(new () 
+            { 
+                Severity = NotificationSeverity.Success, 
+                Summary = "Eliminar", 
+                Detail = "El registro fue eliminado exitosamente", 
+                Duration = 4000 
+            });
 
         _ = InitView();
     }

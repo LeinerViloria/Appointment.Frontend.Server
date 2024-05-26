@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<DialogService>();
+builder.Services.AddRadzenComponents();
 builder.Services.AddSingleton(typeof(LocalDataService));
 builder.Services.AddScoped(typeof(ApiService));
 builder.Services.AddScoped(typeof(TranslatorService));

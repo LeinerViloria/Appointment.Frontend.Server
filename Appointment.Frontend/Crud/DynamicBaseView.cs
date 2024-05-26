@@ -20,6 +20,7 @@ public abstract class DynamicBaseView : ComponentBase
     [Inject] public NavigationManager NavigationManager { get; set; } = null!;
     [Inject] public ModalError ModalError {get; set;} = null!;
     [Inject] public DialogService DialogService {get; set; } = null!;
+    [Inject] public NotificationService NotificationService {get; set; } = null!;
     protected bool ViewIsReady {get; set;}
     protected bool RouteIsValid {get; set;}
     protected IBaseModule Module { get; set; } = null!;
@@ -70,6 +71,13 @@ public abstract class DynamicBaseView : ComponentBase
         if(Request.Success)
         {
             NavigateToList();
+            NotificationService.Notify(new () 
+            { 
+                Severity = NotificationSeverity.Success, 
+                Summary = "Creación", 
+                Detail = "Se creó exitosamente el registro", 
+                Duration = 4000 
+            });
             return;
         }
 
