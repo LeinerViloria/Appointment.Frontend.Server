@@ -7,6 +7,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton(typeof(LocalDataService));
 builder.Services.AddScoped(typeof(ApiService));
+builder.Services.AddScoped(typeof(TranslatorService));
 
 var app = builder.Build();
 
