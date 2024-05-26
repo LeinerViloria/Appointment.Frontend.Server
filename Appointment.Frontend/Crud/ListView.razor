@@ -4,15 +4,27 @@
 
 @using System.Linq.Dynamic.Core
 
+<PageTitle>@Module.PluralName</PageTitle>
+
 @if(ViewIsReady && RouteIsValid && Entity is not null)
 {
     <h3>@Module.PluralName</h3>
 
-    <RadzenButton Click=@(args => Create()) Text="Crear" class="mb-2" ButtonStyle="ButtonStyle.Primary" />
-
     <RadzenDataGrid @bind-Value=@selectedItems Data="@data" TItem="IDictionary<string, object>" ColumnWidth="200px"
                 AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterMode="FilterMode.Advanced" AllowPaging="true" AllowSorting="true">
+        <HeaderTemplate>
+            <RadzenButton Click=@(args => Create()) Text="Crear" ButtonStyle="ButtonStyle.Primary" />
+        </HeaderTemplate>
         <Columns>
+            <RadzenDataGridColumn TItem="object" Title="Acciones" Filterable="false" Sortable="false" TextAlign="TextAlign.Center">
+                <Template Context="Item">
+                    <div class="d-flex">
+                        <RadzenButton Click=@(args => OnEdit()) Icon="add" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.ExtraSmall" />
+                        <RadzenButton Click=@(args => OnDelete()) Icon="add" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.ExtraSmall" />
+                        <RadzenButton Click=@(args => OnDetail()) Icon="add" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.ExtraSmall" />
+                    </div>
+                </Template>
+            </RadzenDataGridColumn>
             @foreach (var column in columns)
             {
                 <RadzenDataGridColumn @key=@column.Key Title="@TranslatorService.GetMessage($"{Entity.GetType().Name}.{@column.Key}")" Type="column.Value"
@@ -115,5 +127,20 @@ else
     void Create()
     {
         NavigationManager.NavigateTo($"{ViewRoute}/create");
+    }
+
+    void OnEdit()
+    {
+
+    }
+
+    void OnDelete()
+    {
+
+    }
+
+    void OnDetail()
+    {
+        
     }
 }
