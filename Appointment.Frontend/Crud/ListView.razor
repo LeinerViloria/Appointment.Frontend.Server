@@ -104,9 +104,9 @@ else
 
         StateHasChanged();
 
-        var Data = await ApiService.GetAll(ViewRoute, Entity.GetType());
+        var Data = await Module.GetData();
 
-        data = Enumerable.Range(0, 20).Select(i =>
+        data = Data.Select(i =>
         {
             var row = new Dictionary<string, object>();
 
@@ -114,11 +114,7 @@ else
             {
                 row.Add(
                     column.Key,
-                    column.Value == typeof(int)
-                            ? i
-                            : column.Value == typeof(DateTime)
-                                ? DateTime.Now.AddMonths(i)
-                                : $"{column.Key}{i}"
+                    column.Value
                 );
             }
 

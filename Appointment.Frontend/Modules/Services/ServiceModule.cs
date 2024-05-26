@@ -3,7 +3,7 @@ using Configuration.Entities;
 
 namespace Appointment.Frontend.Modules;
 
-public class ServiceModule : BaseModule<Service>
+public class ServiceModule(IServiceProvider serviceProvider) : BaseModule<Service>(serviceProvider)
 {
     public override string PluralName {get; set;} = "Servicios";
     public override Dictionary<string, Type> GridColumns {get; set;} = new()

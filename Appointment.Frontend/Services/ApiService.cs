@@ -18,7 +18,7 @@ public class ApiService(IConfiguration configurationManager)
         return IsSaved;
     }
 
-    public async Task<dynamic> GetAll(string Module, Type EntityType)
+    public async Task<List<T>> GetAll<T>(string Module, Type EntityType)
     {
         using var client = new HttpClient();
 
@@ -31,14 +31,11 @@ public class ApiService(IConfiguration configurationManager)
         var Request = await client.GetAsync($"{Url}api/{Module}/getData");
 
         if(!Request.IsSuccessStatusCode)
-            return Enumerable.Empty<object>().ToList();
+            return Enumerable.Empty<T>().ToList();
 
         string responseContent = await Request.Content.ReadAsStringAsync();
 
-        var ListType = typeof(List<>)
-            .MakeGenericType(EntityType);
-
-        var Result = JsonConvert.DeserializeObject(responseContent, ListType) ?? Enumerable.Empty<object>().ToList();
+        var Result = JsonConvert.DeserializeObject<List<T>>(responseContent) ?? Enumerable.Empty<T>().ToList();
 
         return Result;
     }
