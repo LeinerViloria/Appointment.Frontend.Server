@@ -48,6 +48,10 @@
         try
         {
             value = (string)Url;
+
+            if(string.IsNullOrEmpty(value))
+                return;
+
             Manager.NavigateTo(value);
         }catch
         {
