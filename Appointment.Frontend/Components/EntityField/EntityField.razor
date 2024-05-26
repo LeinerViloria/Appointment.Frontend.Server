@@ -2,10 +2,27 @@
 @typeparam TValue
 
 <div>
-    <RadzenDropDown TValue="string" @bind-SearchText=SearchText Placeholder="Buscar...">
+    <RadzenDropDown TValue="string" 
+        @bind-SearchText=SearchText 
+        Placeholder="Buscar..."
+        ValueProperty="Rowid"
+        Value="Data"
+        class="w-100"
+        ValueChanged="SetValue"
+        AllowClear="true">
+
+        <EmptyTemplate>
+            <span>No hay datos cargados</span>
+        </EmptyTemplate>
+
         <Template Context="Item">
 
         </Template>
+
+        <ValueTemplate>
+
+        </ValueTemplate>
+
     </RadzenDropDown>
 </div>
 
@@ -14,6 +31,8 @@
     [Parameter] public TValue Value {get; set;} = default!;
     [Parameter] public EventCallback<TValue> ValueChanged {get; set;}
     [Parameter] public string PropertyName {get; set;} = null!;
+
+    List<object> Data {get; set;} = new();
     
     string searchText = "";
     public string SearchText
@@ -29,5 +48,10 @@
                 searchText = value;
             }
         }
+    }
+
+    void SetValue(object Rowid)
+    {
+
     }
 }

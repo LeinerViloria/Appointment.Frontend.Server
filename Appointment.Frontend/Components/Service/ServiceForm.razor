@@ -23,7 +23,7 @@
 
         <RadzenColumn class="rz-p-5 d-flex flex-column custom-column">
             <RadzenLabel Text="Estado" />
-            <RadzenSelectBar @bind-Value=@Entity.Status TValue="EnumRecordStatus" class="mb-5">
+            <RadzenSelectBar @bind-Value=@Entity.Status TValue="EnumRecordStatus">
                 <Items>
                     @foreach(var Item in Enum.GetValues<EnumRecordStatus>())
                     {
