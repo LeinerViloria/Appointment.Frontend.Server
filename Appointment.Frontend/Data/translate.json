@@ -1,5 +1,12 @@
 {
     "Catalogue.Name": "Nombre",
     "Service.Name": "Nombre",
-    "Service.Price": "Precio"
+    "Service.Price": "Precio",
+    "Employee.Id": "Identificación",
+    "Employee.Name": "Nombre",
+    "Employee.Gender": "Género",
+    "Contract.Id": "Identificador",
+    "Contract.Employee": "Empleado",
+    "Contract.InitialDate": "Fecha de inicio",
+    "Contract.EndDate": "Fecha final"
 }
