@@ -16,5 +16,8 @@
     "Enum.ViewType.Edit.Description": "Se editó el registro exitosamente",
     "Enum.EnumRecordStatus.Active": "Activo",
     "Enum.EnumRecordStatus.Inactive": "Inactivo",
-    "Service.Status": "Estado"
+    "Service.Status": "Estado",
+    "Enum.EnumGender.Male": "Masculino",
+    "Enum.EnumGender.Female": "Femenino",
+    "Enum.EnumGender.NotSpecified": "No especificado"
 }
