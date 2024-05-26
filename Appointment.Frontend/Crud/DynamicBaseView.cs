@@ -3,6 +3,7 @@ using Appointment.Frontend.DTOS;
 using Appointment.Frontend.Interfaces;
 using Appointment.Frontend.Services;
 using Appointment.Frontend.Utils;
+using Appointment.Globals.Enums;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Newtonsoft.Json;
@@ -13,7 +14,7 @@ namespace Appointment.Frontend.Crud;
 public abstract class DynamicBaseView : ComponentBase
 {
     [Parameter] public string ViewRoute { get; set; } = null!;
-    [Parameter] public object Rowid {get; set;} = null!;
+    [Parameter] public object Rowid {get; set;} = default!;
     [Inject] public ApiService ApiService {get; set;} = null!;
     [Inject] public IServiceProvider ServiceProvider { get; set; } = null!;
     [Inject] public TranslatorService TranslatorService {get; set; } = null!;
@@ -29,6 +30,7 @@ public abstract class DynamicBaseView : ComponentBase
     public string FormId {get; set;} = $"{Guid.NewGuid()}";
     public EditContext EditFormContext;
     protected bool IsBusy {get; set;}
+    public abstract ViewType ViewType {get; set;}
 
     protected void SearchModule()
     {
@@ -70,7 +72,7 @@ public abstract class DynamicBaseView : ComponentBase
             return;
         }
 
-        var Request = await Module.Create();
+        var Request = await Module.Save();
 
         if(Request.Success)
         {
@@ -78,8 +80,8 @@ public abstract class DynamicBaseView : ComponentBase
             NotificationService.Notify(new () 
             { 
                 Severity = NotificationSeverity.Success, 
-                Summary = "Creación", 
-                Detail = "Se creó exitosamente el registro", 
+                Summary = TranslatorService.GetMessage($"Enum.ViewType.{ViewType}"), 
+                Detail = TranslatorService.GetMessage($"Enum.ViewType.{ViewType}.Description"), 
                 Duration = 4000 
             });
             return;

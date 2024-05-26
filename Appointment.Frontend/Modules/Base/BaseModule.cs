@@ -34,9 +34,19 @@ public abstract class BaseModule<T>(IServiceProvider serviceProvider) : IBaseMod
         return Result;
     }
 
-    public virtual async Task<ApiResponse> Create()
+    public virtual async Task<ApiResponse> Save()
     {
-        return await ApiService.Create(ModuleName, Entity);
+        var Rowid = typeof(T).GetProperty("Rowid")?
+            .GetValue(Entity);
+
+        ApiResponse Request;
+
+        if (Rowid is null || Rowid.Equals(0))
+            Request = await ApiService.Create(ModuleName, Entity);
+        else
+            Request = await ApiService.Update(ModuleName, Entity);
+
+        return Request;
     }
 
     public virtual async Task GetItem(object Rowid)

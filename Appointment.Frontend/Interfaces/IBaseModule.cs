@@ -14,6 +14,6 @@ public interface IBaseModule
     Task<bool> Delete(object Rowid);
     RenderFragment GetForm(ViewType ViewType);
     string GetModuleName();
-    Task<ApiResponse> Create();
+    Task<ApiResponse> Save();
     Task GetItem(object Rowid);
 }

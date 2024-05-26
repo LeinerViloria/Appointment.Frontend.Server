@@ -3,6 +3,7 @@
 @inherits DynamicBaseView
 
 @using System.Linq.Dynamic.Core
+@using Appointment.Globals.Enums
 
 <PageTitle>@Module.PluralName</PageTitle>
 
@@ -58,6 +59,7 @@ else
 }
 
 @code {
+    public override ViewType ViewType {get; set;} = ViewType.List;
     IList<IDictionary<string, object>> selectedItems;
     public IEnumerable<IDictionary<string, object?>> data { get; set; }
 

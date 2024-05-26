@@ -10,11 +10,12 @@
 </RadzenStack>
 
 <CascadingValue Value="@this">
-    @Module.GetForm(ViewType.Detail)
+    @Module.GetForm(ViewType)
 </CascadingValue>
 
 @code
 {
+    public override ViewType ViewType {get; set;} = ViewType.Detail;
     protected override void OnInitialized()
     {
         InitView();

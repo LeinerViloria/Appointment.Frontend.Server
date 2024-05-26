@@ -20,7 +20,7 @@
         EditContext="@EditFormContext">
 
         <CascadingValue Value="@this">
-            @Module.GetForm(ViewType.Create)
+            @Module.GetForm(ViewType)
         </CascadingValue>
 
     </EditForm>
@@ -35,6 +35,7 @@ else
 
 @code
 {
+    public override ViewType ViewType {get; set;} = ViewType.Edit;
     protected override void OnInitialized()
     {
         _ = InitView();

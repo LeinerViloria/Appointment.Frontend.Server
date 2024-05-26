@@ -84,6 +84,29 @@ public class ApiService(IConfiguration configurationManager)
         return ApiResponse;
     }
 
+    public async Task<ApiResponse> Update(string Module, dynamic Obj)
+    {
+        using var client = new HttpClient();
+
+        var Url = GetEndpoint(Module);
+
+        var ValueContent = JsonConvert.SerializeObject(Obj);
+
+        var Content = new StringContent(ValueContent, Encoding.UTF8, "application/json");
+
+        var Request = await client.PutAsync($"{Url}api/{Module}/", Content)
+            .ConfigureAwait(true);
+
+        string responseContent = await Request.Content.ReadAsStringAsync();
+
+        var ApiResponse = new ApiResponse(){
+            Success = Request.IsSuccessStatusCode,
+            Result = responseContent
+        };
+
+        return ApiResponse;
+    }
+
     public async Task<T?> GetItem<T>(string Module, object Rowid) where T : class
     {
         using var client = new HttpClient();

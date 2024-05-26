@@ -8,5 +8,9 @@
     "Contract.Id": "Identificador",
     "Contract.Employee": "Empleado",
     "Contract.InitialDate": "Fecha de inicio",
-    "Contract.EndDate": "Fecha final"
+    "Contract.EndDate": "Fecha final",
+    "Enum.ViewType.Create": "Creación",
+    "Enum.ViewType.Edit": "Edición",
+    "Enum.ViewType.Create.Description": "Se creó el registro exitosamente",
+    "Enum.ViewType.Edit.Description": "Se editó el registro exitosamente"
 }
