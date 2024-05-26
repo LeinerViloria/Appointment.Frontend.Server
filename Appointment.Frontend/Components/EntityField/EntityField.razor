@@ -15,6 +15,7 @@
         Value=SelectedValue
         class="w-100"
         Name="@($"EntityFiltering-{Id}")"
+        @bind-SelectedItem="@SelectedItem"
         AllowFiltering="true"
         ValueChanged="SetValue"
         AllowClear="true">
@@ -31,15 +32,6 @@
                 @CustomString(Item)
             }
         </Template>
-@* 
-        <ValueTemplate Context="Item">
-            @if(CustomString is null)
-            {
-                @Item.ToString()
-            }else{
-                @CustomString(Item)
-            }
-        </ValueTemplate> *@
 
     </RadzenDropDown>
 </div>
@@ -58,7 +50,8 @@
     bool Loading {get; set;}
     string Id {get;set;} = $"{Guid.NewGuid()}";
     string? SelectedValue {get; set;}
-    
+    object? SelectedItem {get; set;}
+
     string searchText = "";
     public string SearchText
     {
@@ -89,6 +82,14 @@
         Loading = true;
 
         Data = await ApiService.GetAll<TProperty>(EndPoint);
+
+        var PropertyType = typeof(TValue)
+            .GetProperty($"Rowid{PropertyName}")!;
+        var RowidProperty = typeof(TProperty).GetProperty("Rowid");
+
+        SelectedValue = $"{PropertyType.GetValue(Value)}";
+        SelectedItem = Data.FirstOrDefault(x => $"{RowidProperty?.GetValue(x)}" == SelectedValue);
+
         StateHasChanged();
 
         Loading = false;
