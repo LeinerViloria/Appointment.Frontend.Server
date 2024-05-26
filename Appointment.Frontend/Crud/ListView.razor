@@ -59,7 +59,7 @@ else
 
 @code {
     IList<IDictionary<string, object>> selectedItems;
-    public IEnumerable<IDictionary<string, object>> data { get; set; }
+    public IEnumerable<IDictionary<string, object?>> data { get; set; }
 
     public IDictionary<string, Type> columns { get; set; }
     bool Loading {get; set;}
@@ -105,16 +105,19 @@ else
         StateHasChanged();
 
         var Data = await Module.GetData();
+        var EntityType = Entity.GetType();
 
         data = Data.Select(i =>
         {
-            var row = new Dictionary<string, object>();
+            var row = new Dictionary<string, object?>();
 
             foreach (var column in columns)
             {
+                var Value = EntityType.GetProperty(column.Key)!
+                    .GetValue(i);
                 row.Add(
                     column.Key,
-                    column.Value
+                    Value
                 );
             }
 
