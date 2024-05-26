@@ -11,7 +11,7 @@
     <h3>@Module.PluralName</h3>
 
     <RadzenDataGrid @bind-Value=@selectedItems Data="@data" TItem="IDictionary<string, object>" ColumnWidth="200px"
-                AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterMode="FilterMode.Advanced" AllowPaging="true" AllowSorting="true">
+                AllowFiltering="true" IsLoading="Loading" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterMode="FilterMode.Advanced" AllowPaging="true" AllowSorting="true">
         <HeaderTemplate>
             <RadzenButton Click=@(args => Create()) Text="Crear" ButtonStyle="ButtonStyle.Primary" />
         </HeaderTemplate>
@@ -62,6 +62,7 @@ else
     public IEnumerable<IDictionary<string, object>> data { get; set; }
 
     public IDictionary<string, Type> columns { get; set; }
+    bool Loading {get; set;}
 
     public string GetColumnPropertyExpression(string name, Type type)
     {
@@ -83,8 +84,13 @@ else
         return expression;
     }
 
-    private void InitView()
+    private async Task InitView()
     {
+        if(Loading)
+            return;
+
+        Loading = true;
+        ViewIsReady = true;
         LastViewRoute = ViewRoute;
         RouteIsValid = ApiService.EndPointIsSaved(ViewRoute);
 
@@ -95,6 +101,10 @@ else
 
         SetEntity();
         columns = Module.GridColumns;
+
+        StateHasChanged();
+
+        var Data = await ApiService.GetAll(ViewRoute, Entity.GetType());
 
         data = Enumerable.Range(0, 20).Select(i =>
         {
@@ -115,12 +125,14 @@ else
             return row;
         });
 
-        ViewIsReady = true;
+        Loading = false;
+
+        StateHasChanged();
     }
 
     protected override void OnInitialized()
     {
-        InitView();
+        _ = InitView();
 
         base.OnInitialized();
     }
@@ -129,7 +141,7 @@ else
     {
         if(ViewRoute != LastViewRoute)
         {
-            InitView();
+            _ = InitView();
             StateHasChanged();
         }
 

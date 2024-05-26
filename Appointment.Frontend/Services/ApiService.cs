@@ -18,9 +18,29 @@ public class ApiService(IConfiguration configurationManager)
         return IsSaved;
     }
 
-    public void GetAll(string EndPoint)
+    public async Task<dynamic> GetAll(string Module, Type EntityType)
     {
-        var client = new HttpClient();
+        using var client = new HttpClient();
+
+        var Url = EndPoints
+            .Where(x => 
+                x.EndPoints.Exists(y => string.Equals(y, Module, StringComparison.OrdinalIgnoreCase))
+            ).Select(x => x.Url)
+            .Single();
+
+        var Request = await client.GetAsync($"{Url}api/{Module}/getData");
+
+        if(!Request.IsSuccessStatusCode)
+            return Enumerable.Empty<object>().ToList();
+
+        string responseContent = await Request.Content.ReadAsStringAsync();
+
+        var ListType = typeof(List<>)
+            .MakeGenericType(EntityType);
+
+        var Result = JsonConvert.DeserializeObject(responseContent, ListType) ?? Enumerable.Empty<object>().ToList();
+
+        return Result;
     }
 
 }
