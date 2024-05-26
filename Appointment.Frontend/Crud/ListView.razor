@@ -16,18 +16,30 @@
             <RadzenButton Click=@(args => Create()) Text="Crear" ButtonStyle="ButtonStyle.Primary" />
         </HeaderTemplate>
         <Columns>
-            <RadzenDataGridColumn TItem="IDictionary<string, object>" Width="60px" Title="Acciones" Filterable="false" Sortable="false" TextAlign="TextAlign.Center">
+            <RadzenDataGridColumn TItem="IDictionary<string, object>" Width="100px" Title="Acciones" Filterable="false" Sortable="false" TextAlign="TextAlign.Center">
                 <Template Context="Item">
                     <div class="d-flex justify-content-around">
-                        <RadzenButton Click=@(args => OnEdit()) Icon="add" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.ExtraSmall" />
-                        <RadzenButton Click=@(args => OnDelete()) Icon="add" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.ExtraSmall" />
-                        <RadzenButton Click=@(args => OnDetail()) Icon="add" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.ExtraSmall" />
+                        <RadzenButton Click=@(args => OnEdit()) ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.ExtraSmall" >
+                            <div>
+                                <i class="fa-solid fa-pen"></i>
+                            </div>
+                        </RadzenButton>
+                        <RadzenButton Click=@(args => OnDelete()) ButtonStyle="ButtonStyle.Danger" Size="ButtonSize.ExtraSmall">
+                            <div>
+                                <i class="fa-solid fa-trash"></i>
+                            </div>
+                        </RadzenButton>
+                        <RadzenButton Click=@(args => OnDetail()) ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.ExtraSmall">
+                            <div>
+                                <i class="fa-solid fa-eye"></i>
+                            </div>
+                        </RadzenButton>
                     </div>
                 </Template>
             </RadzenDataGridColumn>
             @foreach (var column in columns)
             {
-                <RadzenDataGridColumn @key=@column.Key Title="@TranslatorService.GetMessage($"{Entity.GetType().Name}.{@column.Key}")" Type="column.Value"
+                <RadzenDataGridColumn Width="200px" @key=@column.Key Title="@TranslatorService.GetMessage($"{Entity.GetType().Name}.{@column.Key}")" Type="column.Value"
                                     Property="@GetColumnPropertyExpression(column.Key, column.Value)">
                     <Template>
                         @context[@column.Key]
