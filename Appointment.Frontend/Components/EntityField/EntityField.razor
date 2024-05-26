@@ -1,0 +1,10 @@
+
+@typeparam TValue
+
+<p>Soy un control entidad</p>
+
+@code
+{
+    [Parameter] public TValue Value {get; set;} = default!;
+    [Parameter] public EventCallback<TValue> ValueChanged {get; set;}
+}

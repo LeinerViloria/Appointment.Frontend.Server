@@ -1,6 +1,7 @@
 @using Appointment.Frontend.Components.Base
 @using Appointment.Globals.Enums
 @using Configuration.Entities
+@using Appointment.Frontend.Components.EntityField
 
 @inherits BaseFormComponent<Service>
 
@@ -35,8 +36,8 @@
 
         <RadzenColumn class="rz-p-5 d-flex flex-column custom-column">
             <RadzenLabel Text="Catálogo" />
-            <RadzenTextBox @bind-Value="@Entity.Name" />
-            <ValidationMessage For="@(() => @Entity.Name)" />
+            <EntityField @bind-Value="@Entity" />
+            <ValidationMessage For="@(() => @Entity.Catalogue)" />
         </RadzenColumn>
 
         <RadzenColumn Size="12" class="rz-p-5 d-flex flex-column custom-column">
