@@ -7,6 +7,9 @@
 @if(ViewIsReady && RouteIsValid && Entity is not null)
 {
     <h3>@Module.PluralName</h3>
+
+    <RadzenButton Click=@(args => Create()) Text="Crear" class="mb-2" ButtonStyle="ButtonStyle.Primary" />
+
     <RadzenDataGrid @bind-Value=@selectedItems Data="@data" TItem="IDictionary<string, object>" ColumnWidth="200px"
                 AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterMode="FilterMode.Advanced" AllowPaging="true" AllowSorting="true">
         <Columns>
@@ -107,5 +110,10 @@ else
         }
 
         base.OnParametersSet();
+    }
+
+    void Create()
+    {
+        NavigationManager.NavigateTo($"{ViewRoute}/create");
     }
 }

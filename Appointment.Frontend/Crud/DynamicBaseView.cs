@@ -8,11 +8,12 @@ namespace Appointment.Frontend.Crud;
 
 public abstract class DynamicBaseView : ComponentBase
 {
-    [Parameter]
-    public string ViewRoute { get; set; } = null!;
+    [Parameter] public string ViewRoute { get; set; } = null!;
+    [Parameter] public int Rowid {get; set;}
     [Inject] public ApiService ApiService {get; set;} = null!;
     [Inject] public IServiceProvider ServiceProvider { get; set; } = null!;
     [Inject] public TranslatorService TranslatorService {get; set; } = null!;
+    [Inject] public NavigationManager NavigationManager { get; set; } = null!;
     protected bool ViewIsReady {get; set;}
     protected bool RouteIsValid {get; set;}
     protected IBaseModule Module { get; set; } = null!;
