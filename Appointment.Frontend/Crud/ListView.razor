@@ -62,8 +62,9 @@ else
         return expression;
     }
 
-    protected override async Task OnInitializedAsync()
+    private void InitView()
     {
+        LastViewRoute = ViewRoute;
         RouteIsValid = ApiService.EndPointIsSaved(ViewRoute);
 
         if(RouteIsValid)
@@ -72,6 +73,11 @@ else
         }
 
         ViewIsReady = true;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        InitView();
 
         await base.OnInitializedAsync();
 
@@ -109,5 +115,16 @@ else
 
             return row;
         });
+    }
+
+    protected override void OnParametersSet()
+    {
+        if(ViewRoute != LastViewRoute)
+        {
+            InitView();
+            StateHasChanged();
+        }
+
+        base.OnParametersSet();
     }
 }
