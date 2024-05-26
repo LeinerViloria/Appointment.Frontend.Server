@@ -36,7 +36,7 @@
 
         <RadzenColumn class="rz-p-5 d-flex flex-column custom-column">
             <RadzenLabel Text="Catálogo" />
-            <EntityField @bind-Value="@Entity" />
+            <EntityField @bind-Value="@Entity" PropertyName="@nameof(Service.Catalogue)" />
             <ValidationMessage For="@(() => @Entity.Catalogue)" />
         </RadzenColumn>
 

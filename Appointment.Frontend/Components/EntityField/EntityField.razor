@@ -1,10 +1,33 @@
 
 @typeparam TValue
 
-<p>Soy un control entidad</p>
+<div>
+    <RadzenDropDown TValue="string" @bind-SearchText=SearchText Placeholder="Buscar...">
+        <Template Context="Item">
+
+        </Template>
+    </RadzenDropDown>
+</div>
 
 @code
 {
     [Parameter] public TValue Value {get; set;} = default!;
     [Parameter] public EventCallback<TValue> ValueChanged {get; set;}
+    [Parameter] public string PropertyName {get; set;} = null!;
+    
+    string searchText = "";
+    public string SearchText
+    {
+        get
+        {
+            return searchText;
+        }
+        set
+        {
+            if (searchText != value)
+            {
+                searchText = value;
+            }
+        }
+    }
 }
