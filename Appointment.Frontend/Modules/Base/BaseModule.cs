@@ -38,4 +38,9 @@ public abstract class BaseModule<T>(IServiceProvider serviceProvider) : IBaseMod
     {
         return await ApiService.Create(ModuleName, Entity);
     }
+
+    public virtual async Task GetItem(object Rowid)
+    {
+        Entity = await ApiService.GetItem<T>(ModuleName, Rowid) ?? Activator.CreateInstance<T>();
+    }
 }

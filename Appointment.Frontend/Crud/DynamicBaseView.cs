@@ -13,7 +13,7 @@ namespace Appointment.Frontend.Crud;
 public abstract class DynamicBaseView : ComponentBase
 {
     [Parameter] public string ViewRoute { get; set; } = null!;
-    [Parameter] public int Rowid {get; set;}
+    [Parameter] public object Rowid {get; set;} = null!;
     [Inject] public ApiService ApiService {get; set;} = null!;
     [Inject] public IServiceProvider ServiceProvider { get; set; } = null!;
     [Inject] public TranslatorService TranslatorService {get; set; } = null!;
@@ -36,9 +36,13 @@ public abstract class DynamicBaseView : ComponentBase
         Module = (IBaseModule) ActivatorUtilities.CreateInstance(ServiceProvider, Type);
     }
 
-    protected void SetEntity()
+    protected void SetEditForm()
     {
         EditFormContext ??= new EditContext(this);
+    }
+
+    protected void SetEntity()
+    {
         Entity = Module.GetType()
             .GetProperty("Entity")!
             .GetValue(Module)!;

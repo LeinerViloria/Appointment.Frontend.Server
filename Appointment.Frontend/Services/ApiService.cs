@@ -84,4 +84,24 @@ public class ApiService(IConfiguration configurationManager)
         return ApiResponse;
     }
 
+    public async Task<T?> GetItem<T>(string Module, object Rowid) where T : class
+    {
+        using var client = new HttpClient();
+
+        var Url = GetEndpoint(Module);
+
+        var Request = await client.GetAsync($"{Url}api/{Module}/getData?Rowid={Rowid}");
+
+        if(!Request.IsSuccessStatusCode)
+            return default;
+
+        string responseContent = await Request.Content.ReadAsStringAsync();
+
+        var Result = JsonConvert.DeserializeObject<List<T>>(responseContent) ?? [];
+
+        var Item = Result.FirstOrDefault();
+
+        return Item;
+    }
+
 }

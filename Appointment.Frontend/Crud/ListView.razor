@@ -19,7 +19,7 @@
             <RadzenDataGridColumn TItem="IDictionary<string, object>" Width="100px" Title="Acciones" Filterable="false" Sortable="false" TextAlign="TextAlign.Center">
                 <Template Context="Item">
                     <div class="d-flex justify-content-around">
-                        <RadzenButton Click=@(args => OnEdit()) ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.ExtraSmall" >
+                        <RadzenButton Click=@(args => OnEdit(Item)) ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.ExtraSmall" >
                             <div>
                                 <i class="fa-solid fa-pen"></i>
                             </div>
@@ -97,6 +97,9 @@ else
         if(RouteIsValid)
         {
             SearchModule();
+        }else
+        {
+            return;
         }
 
         SetEntity();
@@ -158,9 +161,14 @@ else
         NavigationManager.NavigateTo($"{ViewRoute}/create");
     }
 
-    void OnEdit()
+    void OnEdit(IDictionary<string, object> Item)
     {
+        Item.TryGetValue("Rowid", out var Rowid);
 
+        if(Rowid is null)
+            return;
+        
+        NavigationManager.NavigateTo($"{ViewRoute}/edit/{Rowid}");
     }
 
     async Task OnDelete(IDictionary<string, object> Item)
