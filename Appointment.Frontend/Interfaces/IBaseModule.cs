@@ -10,7 +10,7 @@ public interface IBaseModule
     string SingularName {get; set;}
     string PluralName { get; set;}
     Dictionary<string, Type> GridColumns {get; set;}
-    Task<List<object>> GetData();
+    Task<List<object>> GetData(params string[] foreignKeys);
     Task<bool> Delete(object Rowid);
     RenderFragment GetForm(ViewType ViewType);
     string GetModuleName();

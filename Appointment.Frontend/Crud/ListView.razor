@@ -46,7 +46,11 @@
                         @if(column.Value.IsEnum)
                         {
                             @TranslatorService.GetMessage($"Enum.{column.Value.Name}.{context[@column.Key]}")
-                        }else
+                        }else if(column.Value.Namespace?.Contains(".Entities.") ?? false)
+                        {
+
+                        }
+                        else
                         {
                             @context[@column.Key]
                         }
@@ -115,7 +119,11 @@ else
 
         StateHasChanged();
 
-        var Data = await Module.GetData();
+        var ForeignKeys = columns.Where(x => x.Value.Namespace?.EndsWith(".Entities") ?? false)
+            .Select(x => x.Value.Name)
+            .ToArray();
+
+        var Data = await Module.GetData(ForeignKeys);
         var EntityType = Entity.GetType();
 
         data = Data.Select(i =>

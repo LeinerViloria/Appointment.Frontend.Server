@@ -18,19 +18,26 @@ public class ApiService(IConfiguration configurationManager)
         return IsSaved;
     }
 
+    public string GetFkQuery(params string[] foreignKeys)
+    {
+        var Data = foreignKeys.Select(x => $"{x}={x}_rs");
+        return string.Join("&&", Data);
+    }
+
     private string GetEndpoint(string Module) => EndPoints
             .Where(x => 
                 x.EndPoints.Exists(y => string.Equals(y, Module, StringComparison.OrdinalIgnoreCase))
             ).Select(x => x.Url)
             .Single();
 
-    public async Task<List<T>> GetAll<T>(string Module)
+    public async Task<List<T>> GetAll<T>(string Module, params string[] foreignKeys)
     {
         using var client = new HttpClient();
 
         var Url = GetEndpoint(Module);
+        var FK = GetFkQuery(foreignKeys);
 
-        var Request = await client.GetAsync($"{Url}api/{Module}/getData");
+        var Request = await client.GetAsync($"{Url}api/{Module}/getData?{FK}");
 
         if(!Request.IsSuccessStatusCode)
             return Enumerable.Empty<T>().ToList();
@@ -106,13 +113,15 @@ public class ApiService(IConfiguration configurationManager)
         return ApiResponse;
     }
 
-    public async Task<T?> GetItem<T>(string Module, object Rowid) where T : class
+    public async Task<T?> GetItem<T>(string Module, object Rowid, params string[] foreignKeys)
+     where T : class
     {
         using var client = new HttpClient();
 
         var Url = GetEndpoint(Module);
+        var FK = GetFkQuery(foreignKeys);
 
-        var Request = await client.GetAsync($"{Url}api/{Module}/getData?Rowid={Rowid}");
+        var Request = await client.GetAsync($"{Url}api/{Module}/getData?Rowid={Rowid}&&{FK}");
 
         if(!Request.IsSuccessStatusCode)
             return default;

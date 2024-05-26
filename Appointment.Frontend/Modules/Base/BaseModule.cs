@@ -21,9 +21,9 @@ public abstract class BaseModule<T>(IServiceProvider serviceProvider) : IBaseMod
 
     protected ApiService GetApiService() => serviceProvider.GetService<ApiService>()!;
 
-    public virtual async Task<List<object>> GetData()
+    public virtual async Task<List<object>> GetData(params string[] foreignKeys)
     {
-        var Result = await ApiService.GetAll<T>(ModuleName);
+        var Result = await ApiService.GetAll<T>(ModuleName, foreignKeys);
         return Result.Cast<object>()
             .ToList();
     }
