@@ -16,9 +16,9 @@
             <RadzenButton Click=@(args => Create()) Text="Crear" ButtonStyle="ButtonStyle.Primary" />
         </HeaderTemplate>
         <Columns>
-            <RadzenDataGridColumn TItem="object" Title="Acciones" Filterable="false" Sortable="false" TextAlign="TextAlign.Center">
+            <RadzenDataGridColumn TItem="IDictionary<string, object>" Width="60px" Title="Acciones" Filterable="false" Sortable="false" TextAlign="TextAlign.Center">
                 <Template Context="Item">
-                    <div class="d-flex">
+                    <div class="d-flex justify-content-around">
                         <RadzenButton Click=@(args => OnEdit()) Icon="add" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.ExtraSmall" />
                         <RadzenButton Click=@(args => OnDelete()) Icon="add" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.ExtraSmall" />
                         <RadzenButton Click=@(args => OnDetail()) Icon="add" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.ExtraSmall" />
