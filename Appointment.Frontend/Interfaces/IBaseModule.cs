@@ -1,4 +1,5 @@
 
+using Appointment.Frontend.DTOS;
 using Appointment.Globals.Enums;
 using Microsoft.AspNetCore.Components;
 
@@ -13,4 +14,5 @@ public interface IBaseModule
     Task<bool> Delete(object Rowid);
     RenderFragment GetForm(ViewType ViewType);
     string GetModuleName();
+    Task<ApiResponse> Create();
 }

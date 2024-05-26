@@ -1,9 +1,11 @@
 
+using Appointment.Frontend.DTOS;
 using Appointment.Frontend.Interfaces;
 using Appointment.Frontend.Services;
 using Appointment.Frontend.Utils;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Newtonsoft.Json;
 using Radzen;
 
 namespace Appointment.Frontend.Crud;
@@ -55,6 +57,26 @@ public abstract class DynamicBaseView : ComponentBase
     {
         IsBusy = true;
         var Result = EditFormContext.Validate();
-        await ModalError.ShowModal(DialogService, "Error", "Testeo");
+        
+        if(!Result)
+        {
+            await ModalError.ShowModal(DialogService, "Error", "Falló el formulario");
+            IsBusy = false;
+            return;
+        }
+
+        var Request = await Module.Create();
+
+        if(Request.Success)
+        {
+            NavigateToList();
+            return;
+        }
+
+        var Response = JsonConvert.DeserializeObject<BadRequestResponse>(Request.Result)!;
+
+        await ModalError.ShowModal(DialogService, Response.Title, string.Join(" \n ", Response.Errors.Name));
+
+        IsBusy = false;
     }
 }

@@ -1,4 +1,5 @@
 
+using System.Text;
 using Appointment.Frontend.DTOS;
 using Appointment.Frontend.Utils;
 using Newtonsoft.Json;
@@ -18,15 +19,17 @@ public class ApiService(IConfiguration configurationManager)
         return IsSaved;
     }
 
-    public async Task<List<T>> GetAll<T>(string Module, Type EntityType)
-    {
-        using var client = new HttpClient();
-
-        var Url = EndPoints
+    private string GetEndpoint(string Module) => EndPoints
             .Where(x => 
                 x.EndPoints.Exists(y => string.Equals(y, Module, StringComparison.OrdinalIgnoreCase))
             ).Select(x => x.Url)
             .Single();
+
+    public async Task<List<T>> GetAll<T>(string Module)
+    {
+        using var client = new HttpClient();
+
+        var Url = GetEndpoint(Module);
 
         var Request = await client.GetAsync($"{Url}api/{Module}/getData");
 
@@ -44,11 +47,7 @@ public class ApiService(IConfiguration configurationManager)
     {
         using var client = new HttpClient();
 
-        var Url = EndPoints
-            .Where(x => 
-                x.EndPoints.Exists(y => string.Equals(y, Module, StringComparison.OrdinalIgnoreCase))
-            ).Select(x => x.Url)
-            .Single();
+        var Url = GetEndpoint(Module);
 
         var Request = await client.DeleteAsync($"{Url}api/{Module}/{Rowid}");
 
@@ -60,6 +59,29 @@ public class ApiService(IConfiguration configurationManager)
         var Result = !string.IsNullOrEmpty(responseContent) && responseContent != "0";
 
         return Result;
+    }
+
+    public async Task<ApiResponse> Create(string Module, dynamic Obj)
+    {
+        using var client = new HttpClient();
+
+        var Url = GetEndpoint(Module);
+
+        var ValueContent = JsonConvert.SerializeObject(Obj);
+
+        var Content = new StringContent(ValueContent, Encoding.UTF8, "application/json");
+
+        var Request = await client.PostAsync($"{Url}api/{Module}/", Content)
+            .ConfigureAwait(true);
+
+        string responseContent = await Request.Content.ReadAsStringAsync();
+
+        var ApiResponse = new ApiResponse(){
+            Success = Request.IsSuccessStatusCode,
+            Result = responseContent
+        };
+
+        return ApiResponse;
     }
 
 }
