@@ -11,7 +11,7 @@
 
         @if(ViewType == ViewType.Detail)
         {
-            <RadzenColumn class="d-flex flex-column col-12">
+            <RadzenColumn class="d-flex flex-column" Size="12">
                 <RadzenLabel Text="Código" />
                 <RadzenTextBox Value="@Entity.Id.ToString()" Disabled="true" />
             </RadzenColumn>
@@ -24,26 +24,26 @@
                 <RadzenTextBox Value="@Entity.Employee?.ToString()" Disabled="true" />
             }else
             {
-                <EntityField @bind-Value="@Entity" TValue="Contract" TProperty="Employee" PropertyName="@nameof(Contract.Employee)" EndPoint="Employee" />
+                <EntityField @bind-Value="@Entity" ReadOnly="@(ViewType != ViewType.Create)" TValue="Contract" TProperty="Employee" PropertyName="@nameof(Contract.Employee)" EndPoint="Employee" />
                 <ValidationMessage For="@(() => @Entity.Employee)" />
             }
         </RadzenColumn>
 
         <RadzenColumn class="d-flex flex-column">
             <RadzenLabel Text="Fecha inicial" />
-            <RadzenDatePicker @bind-Value="@Entity.InitialDate" Disabled="@(ViewType == ViewType.Detail)" />
+            <RadzenDatePicker AllowClear="true" @bind-Value="@Entity.InitialDate" Disabled="@(ViewType != ViewType.Create)" />
             <ValidationMessage For="@(() => @Entity.InitialDate)" />
         </RadzenColumn>
 
         <RadzenColumn class="d-flex flex-column">
             <RadzenLabel Text="Fecha final" />
-            <RadzenDatePicker @bind-Value="@Entity.EndDate" Disabled="@(ViewType == ViewType.Detail)" />
+            <RadzenDatePicker AllowClear="true" @bind-Value="@Entity.EndDate" Disabled="@(ViewType != ViewType.Create)" />
             <ValidationMessage For="@(() => @Entity.EndDate)" />
         </RadzenColumn>
 
         <RadzenColumn class="d-flex flex-column">
             <RadzenLabel Text="Estado" />
-            <RadzenSelectBar @bind-Value=@Entity.Status TValue="EnumRecordStatus" Disabled="@(ViewType == ViewType.Detail)">
+            <RadzenSelectBar @bind-Value=@Entity.Status TValue="EnumRecordStatus" Disabled="@(ViewType != ViewType.Create)">
                 <Items>
                     @foreach(var Item in Enum.GetValues<EnumRecordStatus>())
                     {
