@@ -7,14 +7,20 @@
 <div class="row">
     <div class="col-4 d-flex flex-column">
         <RadzenLabel Text="Código" />
-        <RadzenTextBox @bind-Value="@Entity.Id" Placeholder="ID" class="form-control" />
+        <RadzenTextBox @bind-Value="@Entity.Id" Disabled="@(ViewType == ViewType.Detail)" Placeholder="ID" class="form-control" />
         <ValidationMessage For="@(() => Entity.Id)" />
     </div>
 
     <div class="col-4 d-flex flex-column">
         <RadzenLabel Text="Nombre" />
-        <RadzenTextBox @bind-Value="@Entity.Name" Placeholder="Nombre" class="form-control" />
+        <RadzenTextBox @bind-Value="@Entity.Name" Disabled="@(ViewType == ViewType.Detail)" Placeholder="Nombre" class="form-control" />
         <ValidationMessage For="@(() => Entity.Name)" />
+    </div>
+
+    <div class="col-4 d-flex flex-column">
+        <RadzenLabel Text="Correo electrónico" />
+        <RadzenTextBox @bind-Value="@Entity.Email" Disabled="@(ViewType == ViewType.Detail)" Placeholder="Email" class="form-control" />
+        <ValidationMessage For="@(() => Entity.Email)" />
     </div>
 
     <div class="col-4 d-flex flex-column">
@@ -30,7 +36,7 @@
         <ValidationMessage For="@(() => Entity.Gender)" />
     </div>
 
-    <div class="col-12 mt-2">
+    <div class="col-4 d-flex align-items-center">
         <div class="form-check">
             <RadzenCheckBox @bind-Value="@Entity.IsAdmin" class="form-check-input" />
             <label class="form-check-label">¿Es administrador?</label>
