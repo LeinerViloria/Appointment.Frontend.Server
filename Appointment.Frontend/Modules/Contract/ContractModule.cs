@@ -1,4 +1,5 @@
 
+using Appointment.Frontend.Components.Contract;
 using Appointment.Globals.Enums;
 using Configuration.Entities;
 using Microsoft.AspNetCore.Components;
@@ -19,6 +20,8 @@ public class ContractModule(IServiceProvider serviceProvider) : BaseModule<Contr
 
     public override RenderFragment GetForm(ViewType ViewType) => (builder) =>
     {
-        
+        builder.OpenComponent<ContractForm>(0);
+        builder.AddAttribute(1, "ViewType", ViewType);
+        builder.CloseComponent();
     };
 }

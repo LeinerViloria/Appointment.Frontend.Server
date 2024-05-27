@@ -1,0 +1,58 @@
+@using Appointment.Frontend.Components.Base
+@using Configuration.Entities
+@using Appointment.Globals.Enums
+@using Appointment.Frontend.Components.EntityField
+
+@inherits BaseFormComponent<Contract>
+
+<div class="mt-2">
+    
+    <RadzenRow Gap="1rem" RowGap="0.5rem">
+
+        @if(ViewType == ViewType.Detail)
+        {
+            <RadzenColumn class="d-flex flex-column col-12">
+                <RadzenLabel Text="Código" />
+                <RadzenTextBox Value="@Entity.Id.ToString()" Disabled="true" />
+            </RadzenColumn>
+        }
+
+        <RadzenColumn class="d-flex flex-column">
+            <RadzenLabel Text="Empleado" />
+            @if(ViewType == ViewType.Detail)
+            {
+                <RadzenTextBox Value="@Entity.Employee?.ToString()" Disabled="true" />
+            }else
+            {
+                <EntityField @bind-Value="@Entity" TValue="Contract" TProperty="Employee" PropertyName="@nameof(Contract.Employee)" EndPoint="Employee" />
+                <ValidationMessage For="@(() => @Entity.Employee)" />
+            }
+        </RadzenColumn>
+
+        <RadzenColumn class="d-flex flex-column">
+            <RadzenLabel Text="Fecha inicial" />
+            <RadzenDatePicker @bind-Value="@Entity.InitialDate" Disabled="@(ViewType == ViewType.Detail)" />
+            <ValidationMessage For="@(() => @Entity.InitialDate)" />
+        </RadzenColumn>
+
+        <RadzenColumn class="d-flex flex-column">
+            <RadzenLabel Text="Fecha final" />
+            <RadzenDatePicker @bind-Value="@Entity.EndDate" Disabled="@(ViewType == ViewType.Detail)" />
+            <ValidationMessage For="@(() => @Entity.EndDate)" />
+        </RadzenColumn>
+
+        <RadzenColumn class="d-flex flex-column">
+            <RadzenLabel Text="Estado" />
+            <RadzenSelectBar @bind-Value=@Entity.Status TValue="EnumRecordStatus" Disabled="@(ViewType == ViewType.Detail)">
+                <Items>
+                    @foreach(var Item in Enum.GetValues<EnumRecordStatus>())
+                    {
+                        <RadzenSelectBarItem Value="@Item" Text="@TranslatorService.GetMessage($"Enum.EnumRecordStatus.{Item}")" />
+                    }
+                </Items>
+            </RadzenSelectBar>
+            <ValidationMessage For="@(() => @Entity.Status)" />
+        </RadzenColumn>
+    </RadzenRow>
+
+</div>
