@@ -16,6 +16,9 @@
         <HeaderTemplate>
             <RadzenButton Click=@(args => Create()) Text="Crear" ButtonStyle="ButtonStyle.Primary" />
         </HeaderTemplate>
+        <EmptyTemplate>
+            <span>No se encontró información</span>
+        </EmptyTemplate>
         <Columns>
             <RadzenDataGridColumn TItem="IDictionary<string, object>" Width="100px" Title="Acciones" Filterable="false" Sortable="false" TextAlign="TextAlign.Center">
                 <Template Context="Item">
@@ -97,7 +100,6 @@ else
         if(Loading)
             return;
 
-        ViewIsReady = false;
         Loading = true;
         columns?.Clear();
         LastViewRoute = ViewRoute;
@@ -164,6 +166,7 @@ else
     {
         if(ViewRoute != LastViewRoute)
         {
+            ViewIsReady = false;
             _ = InitView();
             StateHasChanged();
         }
