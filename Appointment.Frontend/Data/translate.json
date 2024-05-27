@@ -19,5 +19,5 @@
     "Service.Status": "Estado",
     "Enum.EnumGender.Male": "Masculino",
     "Enum.EnumGender.Female": "Femenino",
-    "Enum.EnumGender.NotSpecified": "No especificado"
+    "Enum.EnumGender.NotSpecified": "N/A"
 }

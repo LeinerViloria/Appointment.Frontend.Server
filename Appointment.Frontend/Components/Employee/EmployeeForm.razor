@@ -1,5 +1,39 @@
 @using Appointment.Frontend.Components.Base
 @using Configuration.Entities
+@using Appointment.Globals.Enums
 
 @inherits BaseFormComponent<Employee>
 
+<div class="row">
+    <div class="col-4 d-flex flex-column">
+        <RadzenLabel Text="Código" />
+        <RadzenTextBox @bind-Value="@Entity.Id" Placeholder="ID" class="form-control" />
+        <ValidationMessage For="@(() => Entity.Id)" />
+    </div>
+
+    <div class="col-4 d-flex flex-column">
+        <RadzenLabel Text="Nombre" />
+        <RadzenTextBox @bind-Value="@Entity.Name" Placeholder="Nombre" class="form-control" />
+        <ValidationMessage For="@(() => Entity.Name)" />
+    </div>
+
+    <div class="col-4 d-flex flex-column">
+        <RadzenLabel Text="Género" />
+        <RadzenSelectBar @bind-Value="@Entity.Gender" TValue="EnumGender" Disabled="@(ViewType == ViewType.Detail)">
+            <Items>
+                @foreach(var Item in Enum.GetValues<EnumGender>())
+                {
+                    <RadzenSelectBarItem Value="@Item" Text="@TranslatorService.GetMessage($"Enum.EnumGender.{Item}")" />
+                }
+            </Items>
+        </RadzenSelectBar>
+        <ValidationMessage For="@(() => Entity.Gender)" />
+    </div>
+
+    <div class="col-12 mt-2">
+        <div class="form-check">
+            <RadzenCheckBox @bind-Value="@Entity.IsAdmin" class="form-check-input" />
+            <label class="form-check-label">¿Es administrador?</label>
+        </div>
+    </div>
+</div>
