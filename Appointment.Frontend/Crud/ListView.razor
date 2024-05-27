@@ -5,10 +5,10 @@
 @using System.Linq.Dynamic.Core
 @using Appointment.Globals.Enums
 
-<PageTitle>@Module.PluralName</PageTitle>
-
-@if(ViewIsReady && RouteIsValid && Entity is not null)
+@if(ViewIsReady && RouteIsValid && Entity is not null && columns.Count > 0)
 {
+    <PageTitle>@Module.PluralName</PageTitle>
+    
     <h3>@Module.PluralName</h3>
 
     <RadzenDataGrid @bind-Value=@selectedItems Data="@data" TItem="IDictionary<string, object>" ColumnWidth="200px"
@@ -46,11 +46,7 @@
                         @if(column.Value.IsEnum)
                         {
                             @TranslatorService.GetMessage($"Enum.{column.Value.Name}.{context[@column.Key]}")
-                        }else if(column.Value.Namespace?.Contains(".Entities.") ?? false)
-                        {
-
-                        }
-                        else
+                        }else
                         {
                             @context[@column.Key]
                         }
@@ -101,8 +97,9 @@ else
         if(Loading)
             return;
 
+        ViewIsReady = false;
         Loading = true;
-        ViewIsReady = true;
+        columns?.Clear();
         LastViewRoute = ViewRoute;
         RouteIsValid = ApiService.EndPointIsSaved(ViewRoute);
 
@@ -111,6 +108,7 @@ else
             SearchModule();
         }else
         {
+            ViewIsReady = true;
             return;
         }
 
@@ -125,6 +123,7 @@ else
 
         var Data = await Module.GetData(ForeignKeys);
         var EntityType = Entity.GetType();
+        ViewIsReady = true;
 
         data = Data.Select(i =>
         {
